@@ -1,0 +1,17 @@
+.marker{
+  width: 27px;
+  height: 40px;
+  position: absolute;
+  left: -13px;
+  top: -35px;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 25px;
+  letter-spacing: -1px;
+  text-align: center;
+  color: #fff;
+}
+ 
+.marker.black{
+  background: url(marker_black.png);
+}
