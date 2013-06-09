@@ -2,7 +2,7 @@ imgNotes
 =========
 
 imgNotes is an extension of the jQuery [imgViewer](https://github.com/waynegm/imgViewer) plugin that adds markers and notes to an image 
-that can be zoomed in and out with the mousewheel and panned around by click and drag.
+that can be zoomed in and out with the mousewheel and panned around by click and drag. Try out the [demo](http://waynegm.github.io/imgNotes/)
 
 ## Dependencies
 The plugin is known to work with the configuration described below:
