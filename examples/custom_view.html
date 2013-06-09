@@ -5,6 +5,7 @@
 		<style type="text/css" media="all">@import "../css/marker.css";</style>
 		<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" media="screen">
 
+		<link rel="stylesheet" href="../stylesheets/stylesheet.css" media="screen"/>
 		<script type="text/javascript" src="../libs/jquery/jquery.js"></script>
 		<script type="text/javascript" src="../libs/jquery/jquery-ui.js"></script>
 		<script type="text/javascript" src="../libs/jquery.mousewheel.min.js"></script>
@@ -37,19 +38,40 @@
 	</style>
 	</head>
 	<body>
-		<h1 style="text-align: center;">jQuery imgNotes - Custom View Example</h1>
-		<p>
-			This example demonstrates using a tooltip to display the note. In this case I'm using the jQuery-ui tooltip and
-			activating the tooltip in a custom "onAdd" callback and setting the "onShow" callback to noop. Note that the 
-			jQuery ui tooltip widget seems to always require a title attribute on the tip target even if it isn't used for the 
-			tip. Also I haven't found a simple way to make the tip persist so you can interact with its content, eg click a link.
-		</p>
+		<div class="wrapper">
+			<header>
+				<h1 class="title">jQuery imgNotes</h1>
+			</header>
+			<div id="container">
+				<p class="tagline">Custom View Example</p>
+				<div id="main" role="main" style="padding-bottom: 20px;">
+					<div class="download-bar">
+						<div class="inner">
+							<a href="https://github.com/waynegm/imgNotes/tarball/master" class="download-button tar"><span>Download</span></a>
+							<a href="https://github.com/waynegm/imgNotes/zipball/master" class="download-button zip"><span>Download</span></a>
+							<a href="https://github.com/waynegm/imgNotes" class="code">View imgNotes on GitHub</a>
+						</div>
+						<span class="blc"></span><span class="trc"></span>
+					</div>
+					<article class="markdown-body">
+						<p>
+						This example demonstrates using a tooltip to display the note. In this case I'm using the jQuery-ui tooltip and
+						activating it in a custom "onAdd" callback and setting the "onShow" callback to noop. Note that the 
+						jQuery ui tooltip widget seems to always require a title attribute on the tip target even if it isn't used for the 
+						tip. Also I haven't found a simple way to make the tip persist so you can interact with its content, eg click a link.
+						</p>
+					</article>
+				</div>
+			</div>
+		</div>
+		<br/>
 		<div id-"imgdiv" style="text-align: center">
-			<img id="image" src="https://raw.github.com/waynegm/imgNotes/master/image/test_image.jpg" style="border: 30px solid #ccc; padding:20px;" width="80%"/>
+			<img id="image" src="https://raw.github.com/waynegm/imgNotes/master/image/test_image.jpg" style="border: 30px solid #555; padding:20px;" width="80%"/>
 			<br/>
 			<button id="toggleEdit">Edit</button>	<button id="export">Export</button>
 
-		</div><br/>
+		</div>
+		<br/>
 		<div id=txt></div>
 <script type="text/javascript">
 ;(function($) {
