@@ -37,9 +37,15 @@ module.exports = function(grunt) {
     qunit: {
 		all: {
 			options: {
-				urls: ['1.8.0', '1.9.0', '2.0.0'].map(function(version) {
-					return 'http://localhost:<%= connect.server.options.port %>/test/imgNotes.html?jquery='+version;
-				})
+				urls: (function() {
+							var res = [];
+							['2.0.1', '1.10.0', '1.9.1', '1.8.3' ].forEach( function(jqversion) {
+								['1.10.3', '1.9.2', '1.8.24'].forEach( function(uiversion) {
+									this.push('http://localhost:<%= connect.server.options.port %>/test/imgNotes.html?jquery=' + jqversion + '&jquery-ui=' + uiversion);
+								}, this);
+							}, res);
+							return res;
+				})()
 			}
 		}
     },
