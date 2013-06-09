@@ -22,7 +22,8 @@
   "dependencies": {
     "jquery": ">=1.8",
     "jquery-ui": ">=1.8",
-    "jQuery Mousewheel":  ">=3.0"
+    "jQuery Mousewheel":  ">=3.0",
+    "jQuery imgViewer": ">=0.6"
   },
   "keywords": [
       "jQuery",
