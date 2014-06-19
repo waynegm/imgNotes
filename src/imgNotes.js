@@ -10,6 +10,7 @@
 		options: {
 			zoom: 1,
 			zoomStep: 0.1,
+			zoomable: true,
 			canEdit: false,
 			vAll: "middle",
 			hAll: "middle",
@@ -124,7 +125,10 @@
 								$.each(self.notes, function() {
 									self._updateMarkerPos(this);
 								});
-							}
+							},
+							zoom: self.options.zoom,
+							zoomStep: self.options.zoomStep,
+							zoomable: self.options.zoomable
 			});
 		},
 /*
@@ -165,6 +169,9 @@
 					break;
 				case 'zoomStep':
 					$(this.img).imgViewer("option", "zoomStep", value);
+					break;
+				case 'zoomable':
+					$(this.img).imgViewer("option", "zoomable", value);
 					break;
 			}
 		},

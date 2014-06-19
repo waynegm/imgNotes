@@ -21,8 +21,9 @@ The plugin is known to work with the configuration described below:
  * [jQuery](http://jquery.com/) (>=1.8)
  * [jQuery UI](http://jqueryui.com/) (>=1.8)
     * [Widget Factory](http://api.jqueryui.com/jQuery.widget/)
- * [jQuery Mousewheel](http://brandonaaron.net/code/mousewheel/docs) (>=3.0)
- * [jQuery imgViewer](https://github.com/waynegm/imgViewer) (>=0.6.0)
+ * [toe.js](https://github.com/visiongeist/toe.js) (>=3.0)
+ * [Zoetrope](https://github.com/benplum/Zoetrope) (>=3.0)
+ * [jQuery imgViewer](https://github.com/waynegm/imgViewer) (>=0.7.0)
 
 ## Usage
 
@@ -34,7 +35,8 @@ Include either the development version or minified production version of the JS 
 	...
 	<script src="jquery.js"></script>
 	<script src="jquery-ui.js"></script>
-	<script src="jquery.mousewheel.js"></script>
+	<script src="jquery.fs.zoetrope.min.js"></script>
+	<script src="toe.min.js"></script>
 	<script src="imgViewer.min.js"></script>
 	<script src="imgNotes.min.js"></script>
 	...
@@ -105,6 +107,15 @@ $("#image1").imgNotes("option", "zoomStep", 0.05);
 
 ```javascript
 $("#image1").imgNotes("option", "zoom", 3);
+```
+
+###zoomable
+  * Controls if image will be zoomable
+  * Default: true
+  * Example - to disble image zooming:
+
+```javascript
+$("#image1").imgNotes("option", "zoomable", false);
 ```
 
 ###onAdd
@@ -193,3 +204,7 @@ Copyright (c) 2013 Wayne Mogg.
 ## Release History
 ### 0.6
 First release
+### 0.7
+Update to work with imgViewer 0.7
+Add zoomable option to disable zooming
+Updated Grunfile.js to include tests against latest version (2.1.0) of jQuery.
