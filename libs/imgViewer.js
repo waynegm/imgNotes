@@ -1,11 +1,6 @@
-/*
- * imgViewer
- * 
- *
- * Copyright (c) 2013 Wayne Mogg
- * Licensed under the MIT license.
- */
-
+/*! jQuery imgViewer - v0.7.0 - 2014-06-19
+* https://github.com/waynegm/imgViewer
+* Copyright (c) 2014 Wayne Mogg; Licensed MIT */
 /*
  *	Add a tap and drag gesture to toe.js
  */
@@ -255,6 +250,14 @@
 			});
 			
 			$zimg.mousedown( function(e) {
+				function endDrag(e) {
+					e.preventDefault();
+					stopRenderLoop();
+					setTimeout(function() {	self.dragging = false; }, 0);
+					$zimg.unbind("mousemove");
+					$zimg.unbind("mouseup");
+					$(document).unbind("mouseup");
+				}
 				if (self.options.zoomable) {
 					e.preventDefault();
 					startRenderLoop();
@@ -266,14 +269,6 @@
 						self.vCenter.y = self.vCenter.y - (e.pageY - last.pageY)/self.options.zoom;
 						last = e;
 					});
-					function endDrag(e) {
-						e.preventDefault();
-						stopRenderLoop();
-						setTimeout(function() {	self.dragging = false; }, 0);
-						$zimg.unbind("mousemove");
-						$zimg.unbind("mouseup");
-						$(document).unbind("mouseup");
-					}
 					$(document).one("mouseup", endDrag);
 					$zimg.one("mouseup", endDrag);
 				}
