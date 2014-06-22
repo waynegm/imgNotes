@@ -1,4 +1,4 @@
-/*! jQuery imgNotes - v0.7.0 - 2014-06-19
+/*! jQuery imgNotes - v0.7.1 - 2014-06-22
 * https://github.com/waynegm/imgNotes
 * Copyright (c) 2014 Wayne Mogg; Licensed MIT */
 ;(function($) {

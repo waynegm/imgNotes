@@ -2,7 +2,7 @@
   "name": "imgNotes",
   "title": "jQuery imgNotes",
   "description": "Extension of the jQuery imgViewer plugin to add markers and notes to the image.",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "homepage": "",
   "author": {
     "name": "Wayne Mogg"

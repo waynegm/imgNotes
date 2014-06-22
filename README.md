@@ -23,7 +23,7 @@ The plugin is known to work with the configuration described below:
     * [Widget Factory](http://api.jqueryui.com/jQuery.widget/)
  * [toe.js](https://github.com/visiongeist/toe.js) (>=3.0)
  * [Zoetrope](https://github.com/benplum/Zoetrope) (>=3.0)
- * [jQuery imgViewer](https://github.com/waynegm/imgViewer) (>=0.7.0)
+ * [jQuery imgViewer](https://github.com/waynegm/imgViewer) (>=0.7.1)
 
 ## Usage
 
@@ -204,7 +204,7 @@ Copyright (c) 2013 Wayne Mogg.
 ## Release History
 ### 0.6
 First release
-### 0.7
-Update to work with imgViewer 0.7
+### 0.7.1
+Update to work with imgViewer 0.7.1
 Add zoomable option to disable zooming
 Updated Grunfile.js to include tests against latest version (2.1.0) of jQuery.
