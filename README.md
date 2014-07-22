@@ -23,6 +23,7 @@ The plugin is known to work with the configuration described below:
     * [Widget Factory](http://api.jqueryui.com/jQuery.widget/)
  * [toe.js](https://github.com/visiongeist/toe.js) (>=3.0)
  * [Zoetrope](https://github.com/benplum/Zoetrope) (>=3.0)
+ * [jquery-mousewheel](https://github.com/brandonaaron/jquery-mousewheel) (>=3.0)
  * [jQuery imgViewer](https://github.com/waynegm/imgViewer) (>=0.7.1)
 
 ## Usage
@@ -37,6 +38,7 @@ Include either the development version or minified production version of the JS 
 	<script src="jquery-ui.js"></script>
 	<script src="jquery.fs.zoetrope.min.js"></script>
 	<script src="toe.min.js"></script>
+	<script src="jquery.mousewheel.min.js"></script>
 	<script src="imgViewer.min.js"></script>
 	<script src="imgNotes.min.js"></script>
 	...
@@ -203,8 +205,12 @@ Copyright (c) 2013 Wayne Mogg.
 
 ## Release History
 ### 0.6
-First release
+- First release
+
 ### 0.7.1
-Update to work with imgViewer 0.7.1
-Add zoomable option to disable zooming
-Updated Grunfile.js to include tests against latest version (2.1.0) of jQuery.
+- Update to work with imgViewer 0.7.1
+- Add zoomable option to disable zooming
+- Updated Grunfile.js to include tests against latest version (2.1.0) of jQuery.
+
+### 0.7.2
+- Bump version number for bug fix in imgViewer
