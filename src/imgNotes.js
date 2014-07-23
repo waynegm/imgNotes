@@ -89,7 +89,7 @@
 						
 					},
 					close: function() {
-						$(this).dialog("remove");
+						$(this).dialog("destroy");
 					}
 				});
 			}
