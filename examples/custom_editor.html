@@ -103,16 +103,14 @@
 											});
 								}
 		});
-		$img.one("load",function(){
-			$img.imgNotes("import", [	{x: "0.5", y:"0.5", note:"AFL Grand Final Trophy"}, 
-										{x: "0.322", y:"0.269", note: '\
-											<center><b>Brisbane Lions Flag</b><br/>\
-											<img src="http://www.lions.com.au/static-resources/themes/brisbane/images/logo-brisbane.png"/></center>\
-											<a href="http://www.lions.com.au/" target="blank">The Brisbane Lions</a> \
-											is an <a href="http://en.wikipedia.org/wiki/Australian_rules_football" target="blank">Australian rules football club.</a>'
-										},
-										{x: "0.824", y: "0.593", note: "Fluffy microphone"}]);
-		});
+		$img.imgNotes("import", [	{x: "0.5", y:"0.5", note:"AFL Grand Final Trophy"}, 
+									{x: "0.322", y:"0.269", note: '\
+										<center><b>Brisbane Lions Flag</b><br/>\
+										<img src="http://www.lions.com.au/static-resources/themes/brisbane/images/logo-brisbane.png"/></center>\
+										<a href="http://www.lions.com.au/" target="blank">The Brisbane Lions</a> \
+										is an <a href="http://en.wikipedia.org/wiki/Australian_rules_football" target="blank">Australian rules football club.</a>'
+									},
+									{x: "0.824", y: "0.593", note: "Fluffy microphone"}]);
 		var $toggle = $("#toggleEdit");
 		if ($img.imgNotes("option","canEdit")) {
 			$toggle.text("View");

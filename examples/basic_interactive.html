@@ -56,11 +56,9 @@
 ;(function($) {
 	$(document).ready(function() {
 		var $img = $("#image").imgNotes();
-		$img.one("load",function(){
-			$img.imgNotes("import", [	{x: "0.5", y:"0.5", note:"AFL Grand Final Trophy"}, 
-										{x: "0.322", y:"0.269", note: "Brisbane Lions Flag"},
-										{x: "0.824", y: "0.593", note: "Fluffy microphone"}]);
-		});
+		$img.imgNotes("import", [	{x: "0.5", y:"0.5", note:"AFL Grand Final Trophy"}, 
+									{x: "0.322", y:"0.269", note: "Brisbane Lions Flag"},
+									{x: "0.824", y: "0.593", note: "Fluffy microphone"}]);
 		var $toggle = $("#toggleEdit");
 		if ($img.imgNotes("option","canEdit")) {
 			$toggle.text("View");

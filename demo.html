@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>jQuery imgNotes - Custom Marker</title>
-		<style type="text/css" media="all">@import "../css/marker.css";</style>
+		<title>jQuery imgNotes - Interactive Base</title>
+		<style type="text/css" media="all">@import "css/marker.css";</style>
 		
 		<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" media="screen">
-		<script type="text/javascript" src="../libs/jquery/jquery.js"></script>
-		<script type="text/javascript" src="../libs/jquery/jquery-ui.js"></script>
-		<script type="text/javascript" src="../libs/jquery.fs.zoetrope.min.js"></script>
-		<script type="text/javascript" src="../libs/toe.min.js"></script>
-		<script type="text/javascript" src="../libs/jquery.mousewheel.min.js"></script>
-		<script type="text/javascript" src="../libs/imgViewer.min.js"></script>
-		<script type="text/javascript" src="../src/imgNotes.js"></script>
+		<script type="text/javascript" src="libs/jquery/jquery.js"></script>
+		<script type="text/javascript" src="libs/jquery/jquery-ui.js"></script>
+		<script type="text/javascript" src="libs/jquery.fs.zoetrope.min.js"></script>
+		<script type="text/javascript" src="libs/toe.min.js"></script>
+		<script type="text/javascript" src="libs/jquery.mousewheel.min.js"></script>
+		<script type="text/javascript" src="libs/imgViewer.min.js"></script>
+		<script type="text/javascript" src="src/imgNotes.js"></script>
 		
 		<style type="text/css">
 		table.gridtable {
@@ -39,15 +39,14 @@
 	</style>
 	</head>
 	<body>
-		<h1 style="text-align: center;">jQuery imgNotes - Custom Marker Example</h1>
+		<h1 style="text-align: center;">jQuery imgNotes - Basic Interactive Example</h1>
 		<p>
-			This example demonstrates a custom implementation of the "onAdd" callback to insert the note marker. 
-			Any code that generates a valid DOM element should work. In this case, as an alternative to just 
-			using a different image, the implementation of the callback just inserts a randomly colored div element 
-			with rounded ends and instead of a number the marker text is an upper case letter.
+			This example demonstrates a no frills note editor with a button to toggle the widget mode between view
+			and edit and a button to export the notes to a table below the image.
 		</p>
+
 		<div id="imgdiv" style="text-align: center">
-			<img id="image" src="../image/test_image.jpg" style="border: 30px solid #ccc; padding:20px;" width="80%"/>
+			<img id="image" src="image/test_image.jpg" style="border: 30px solid #ccc; padding:20px;" width="80%"/>
 			<br/>
 			<button id="toggleEdit">Edit</button>	<button id="export">Export</button>
 
@@ -56,23 +55,7 @@
 <script type="text/javascript">
 ;(function($) {
 	$(document).ready(function() {
-		var $img = $("#image").imgNotes({
-											onAdd: function() {
-													this.options.vAll = "bottom";
-													this.options.hAll = "middle";
-													var color = "#"+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6);
-													var chr = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".charAt(this.noteCount%26-1);
-													var elem = $(document.createElement('div')).css({
-																						"background-color": color,
-																						height: "40px",
-																						width: "15px",
-																						"border-radius": "60px",
-																						"text-align": "center",
-																						color: "#fff"
-																					}).html(chr);
-													return elem;
-											}
-		});
+		var $img = $("#image").imgNotes();
 		$img.imgNotes("import", [	{x: "0.5", y:"0.5", note:"AFL Grand Final Trophy"}, 
 									{x: "0.322", y:"0.269", note: "Brisbane Lions Flag"},
 									{x: "0.824", y: "0.593", note: "Fluffy microphone"}]);
