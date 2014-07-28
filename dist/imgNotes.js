@@ -1,4 +1,4 @@
-/*! jQuery imgNotes - v0.7.2 - 2014-07-26
+/*! jQuery imgNotes - v0.7.2 - 2014-07-28
 * https://github.com/waynegm/imgNotes
 * Copyright (c) 2014 Wayne Mogg; Licensed MIT */
 ;(function($) {
@@ -14,7 +14,7 @@
  * Default callback to create a marker indicating a note location
  *	See the examples for more elaborate alternatives.
  */
-		onAdd: function() {
+			onAdd: function() {
 				this.options.vAll = "bottom";
 				this.options.hAll = "middle";
 				return  $(document.createElement('span')).addClass("marker black").html(this.noteCount);
@@ -88,8 +88,22 @@
 						$(this).dialog("destroy");
 					}
 				});
+			},
+/*
+ *	Default callback when the markers are repainted
+ */
+			onUpdateMarker: function(ev, data) {
+				var $elem = $(data.marker);
+				var $img = $(data.img);
+				var pos = $img.imgViewer("imgToView", $elem.data("relx"), $elem.data("rely"));
+				if (pos) {
+					$elem.css({
+						left: (pos.x - $elem.data("xOffset")),
+						top: (pos.y - $elem.data("yOffset")),
+						position: "absolute"
+					});
+				}
 			}
-				
 		},
 		
 		
@@ -117,9 +131,10 @@
 									}
 								}
 							},
-							onUpdate: function() {
+							onUpdate: function(ev, imgv) {
+								self.options.zoom = imgv.options.zoom;
 								$.each(self.notes, function() {
-									self._updateMarkerPos(this);
+									self._trigger("onUpdateMarker", ev, {"img": self.img, "marker": this});
 								});
 							},
 							zoom: self.options.zoom,
@@ -204,7 +219,7 @@
 			$elem.on("remove", function() {
 				self._delete(elem);
 			});
-			this._updateMarkerPos(elem);
+			this._trigger("onUpdateMarker", null, {"img": self.img, "marker": elem});
 			this.notes.push(elem);
 			return elem;
 		},
@@ -213,21 +228,6 @@
  */
 		count: function() {
 			return this.noteCount;
-		},
-/*
- *	Update the marker position
- */
-		_updateMarkerPos: function(elem) {
-			var $elem = $(elem),
-				$img = $(this.img);
-			var pos = $img.imgViewer("imgToView", $elem.data("relx"), $elem.data("rely"));
-			if (pos) {
-				$elem.css({
-					left: (pos.x - $elem.data("xOffset")),
-					top: (pos.y - $elem.data("yOffset")),
-					position: "absolute"
-				});
-			}
 		},
 /*
  *	Delete a note
