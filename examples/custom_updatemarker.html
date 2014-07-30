@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>jQuery imgNotes - Custom View</title>
+		<title>jQuery imgNotes - Custom Marker</title>
 		<style type="text/css" media="all">@import "../css/marker.css";</style>
-		<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" media="screen">
-
+		
 		<link rel="stylesheet" href="../stylesheets/stylesheet.css" media="screen"/>
+		<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" media="screen">
 		<script type="text/javascript" src="../libs/jquery/jquery.js"></script>
 		<script type="text/javascript" src="../libs/jquery/jquery-ui.js"></script>
 		<script type="text/javascript" src="../libs/jquery.fs.zoetrope.min.js"></script>
@@ -45,7 +45,7 @@
 				<h1 class="title">jQuery imgNotes</h1>
 			</header>
 			<div id="container">
-				<p class="tagline">Custom View Example</p>
+				<p class="tagline">Custom Update Marker Example</p>
 				<div id="main" role="main" style="padding-bottom: 20px;">
 					<div class="download-bar">
 						<div class="inner">
@@ -57,10 +57,10 @@
 					</div>
 					<article class="markdown-body">
 						<p>
-						This example demonstrates using a tooltip to display the note. In this case I'm using the jQuery-ui tooltip and
-						activating it in a custom "onAdd" callback and setting the "onShow" callback to noop. Note that the 
-						jQuery ui tooltip widget seems to always require a title attribute on the tip target even if it isn't used for the 
-						tip. Also I haven't found a simple way to make the tip persist so you can interact with its content, eg click a link.
+						This example demonstrates a custom implementation of the "onUpdateMarker" callback to change how the markers are rendered. 
+						In this case the size of the marker relative to the image is preserved. A custom "onAdd" callback inserts a circular div element 
+						with middle horizontal and vertical alignment (other alignment options wont work as expected). The "onUpdateMarker" callback changes the size of the
+						the marker as the zoom changes. 
 						</p>
 					</article>
 				</div>
@@ -79,27 +79,38 @@
 ;(function($) {
 	$(document).ready(function() {
 		var $img = $("#image").imgNotes({
-					onShow: $.noop,
-					onAdd: function() {
-							this.options.vAll = "bottom";
-							this.options.hAll = "middle";
-							var elem = $(document.createElement('span')).addClass("marker black").html(this.noteCount).attr("title", "");
-							var self = this;
-							$(elem).tooltip({
-									content: function() {
-												return $(elem).data("note");
+											onAdd: function() {
+													this.options.vAll = "middle";
+													this.options.hAll = "middle";
+													var color = "#f00";
+													var elem = $(document.createElement('div')).css({
+																						"border-style": "solid",
+																						"border-color": color,
+																						height: "40px",
+																						width: "40px",
+																						"border-radius": "40px",
+																						"border-width": "5px"
+																					});
+													return elem;
+											},
+											onUpdateMarker: function(elem) {
+													var $elem = $(elem);
+													var $img = $(this.img);
+													var pos = $img.imgViewer("imgToView", $elem.data("relx"), $elem.data("rely"));
+													var zoom = $img.imgViewer("option", "zoom");
+													if (pos) {
+														$elem.css({
+															left: (pos.x - $elem.data("xOffset")),
+															top: (pos.y - $elem.data("yOffset")),
+															position: "absolute",
+															transform: "scale(" + zoom + "," + zoom + ")"
+														});
+													}
 											}
-							});
-							return elem;
-					} 
+
 		});
 		$img.imgNotes("import", [	{x: "0.5", y:"0.5", note:"AFL Grand Final Trophy"}, 
-									{x: "0.322", y:"0.269", note: '\
-										<center><b>Brisbane Lions Flag</b><br/>\
-										<img src="http://www.lions.com.au/static-resources/themes/brisbane/images/logo-brisbane.png"/></center>\
-										<a href="http://www.lions.com.au/" target="blank">The Brisbane Lions</a> \
-										is an <a href="http://en.wikipedia.org/wiki/Australian_rules_football" target="blank">Australian rules football club.</a>'
-									},
+									{x: "0.322", y:"0.269", note: "Brisbane Lions Flag"},
 									{x: "0.824", y: "0.593", note: "Fluffy microphone"}]);
 		var $toggle = $("#toggleEdit");
 		if ($img.imgNotes("option","canEdit")) {
