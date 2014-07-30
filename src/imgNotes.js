@@ -96,9 +96,9 @@
 /*
  *	Default callback when the markers are repainted
  */
-			onUpdateMarker: function(ev, data) {
-				var $elem = $(data.marker);
-				var $img = $(data.img);
+	onUpdateMarker: function(elem) {
+				var $elem = $(elem);
+				var $img = $(this.img);
 				var pos = $img.imgViewer("imgToView", $elem.data("relx"), $elem.data("rely"));
 				if (pos) {
 					$elem.css({
@@ -138,7 +138,8 @@
 							onUpdate: function(ev, imgv) {
 								self.options.zoom = imgv.options.zoom;
 								$.each(self.notes, function() {
-									self._trigger("onUpdateMarker", ev, {"img": self.img, "marker": this});
+									self.options.onUpdateMarker.call(self, this);
+									
 								});
 							},
 							zoom: self.options.zoom,

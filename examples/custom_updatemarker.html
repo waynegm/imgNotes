@@ -71,9 +71,9 @@
 																					});
 													return elem;
 											},
-											onUpdateMarker: function(ev, data) {
-													var $elem = $(data.marker);
-													var $img = $(data.img);
+											onUpdateMarker: function(elem) {
+													var $elem = $(elem);
+													var $img = $(this.img);
 													var pos = $img.imgViewer("imgToView", $elem.data("relx"), $elem.data("rely"));
 													var zoom = $img.imgViewer("option", "zoom");
 													if (pos) {

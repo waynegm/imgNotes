@@ -1,17 +1,13 @@
 imgNotes
 =========
 
-imgNotes is an extension of the jQuery [imgViewer](https://github.com/waynegm/imgViewer) plugin that adds markers and notes to an image 
-that can be zoomed in and out with the mousewheel and panned around by click and drag. Try out the [demo](http://waynegm.github.io/imgNotes/).
+imgNotes is an extension of the jQuery [imgViewer](https://github.com/waynegm/imgViewer) plugin that adds markers and notes to an image that can be zoomed in and out with the mousewheel and panned around by click and drag. Try out the [demo](http://waynegm.github.io/imgNotes/).
 
 The widget has an edit and a view mode controlled by an option flag (canEdit). 
 
-In edit mode (canEdit: true) the default action associated with clicking on the image is to insert a marker and open a dialog with a 
-textarea to enter a note. The "Delete" button on this dialog deletes the marker and note. Callbacks are provided for developers to 
-override the default marker and the note editor.
+In edit mode (canEdit: true) the default action associated with clicking on the image is to insert a marker and open a dialog with a textarea to enter a note. The "Delete" button on this dialog deletes the marker and note. Callbacks are provided for developers to override the default marker and the note editor.
 
-In view mode (canEdit: false) markers cannot be changed. By default, clicking on a marker displays the associated note in a dialog window. 
-This default action can be overriden by a callback option.
+In view mode (canEdit: false) markers cannot be changed. By default, clicking on a marker displays the associated note in a dialog window. This default action can be overriden by a callback option.
 
 Methods are provided to import and export notes from and to  a javascript array.
 
@@ -153,6 +149,13 @@ $("#image1").imgNotes("option", "onAdd", function() {
 	* ev: the click event
 	* elem: the marker DOM element 
 
+###onUpdateMarker
+   * Callback triggered when a marker is redrawn
+    Within the callback "this" refers to the imgNotes widget
+   * Default: Display the marker at its original size on the image positioned according to the vAll and hAll alignment options
+   * Callback Arguments:
+     * elem: the marker DOM element
+
 ## Public Methods
 
 ###addNote
@@ -214,3 +217,10 @@ Copyright (c) 2013 Wayne Mogg.
 
 ### 0.7.2
 - Bump version number for bug fix in imgViewer
+
+### 0.7.3
+- Add onUpdateMarker callback
+- Add example with custom onUpdateMarker
+- Fix so that zoom option value reflects zoom of underlying imgViewer
+
+
