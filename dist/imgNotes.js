@@ -1,4 +1,4 @@
-/*! jQuery imgNotes - v0.7.3 - 2014-07-30
+/*! jQuery imgNotes - v0.7.4 - 2014-08-05
 * https://github.com/waynegm/imgNotes
 * Copyright (c) 2014 Wayne Mogg; Licensed MIT */
 ;(function($) {
@@ -142,6 +142,7 @@
 							zoomStep: self.options.zoomStep,
 							zoomable: self.options.zoomable
 			});
+			$img.imgViewer("update");
 		},
 /*
  *	Remove the plugin
@@ -220,7 +221,7 @@
 			$elem.on("remove", function() {
 				self._delete(elem);
 			});
-			this._trigger("onUpdateMarker", null, {"img": self.img, "marker": elem});
+			self.options.onUpdateMarker.call(self, elem);
 			this.notes.push(elem);
 			return elem;
 		},
