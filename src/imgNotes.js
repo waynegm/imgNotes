@@ -146,6 +146,7 @@
 							zoomStep: self.options.zoomStep,
 							zoomable: self.options.zoomable
 			});
+			$img.imgViewer("update");
 		},
 /*
  *	Remove the plugin
@@ -224,7 +225,7 @@
 			$elem.on("remove", function() {
 				self._delete(elem);
 			});
-			this._trigger("onUpdateMarker", null, {"img": self.img, "marker": elem});
+			self.options.onUpdateMarker.call(self, elem);
 			this.notes.push(elem);
 			return elem;
 		},

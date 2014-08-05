@@ -223,4 +223,9 @@ Copyright (c) 2013 Wayne Mogg.
 - Add example with custom onUpdateMarker
 - Fix so that zoom option value reflects zoom of underlying imgViewer
 
+### 0.7.4
+- Simplify signature for onUpdateMarker callback
+- Fix call of onUpdateMarker in addNote method - fixes bug with markers not displayed on first load
+
+
 
