@@ -2,7 +2,6 @@
 <html>
 	<head>
 		<title>jQuery imgNotes - Interactive Base</title>
-		<style type="text/css" media="all">@import "../css/marker.css";</style>
 		
 		<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" media="screen">
 		<script type="text/javascript" src="../libs/jquery/jquery.js"></script>
@@ -11,6 +10,7 @@
 		<script type="text/javascript" src="../libs/toe.min.js"></script>
 		<script type="text/javascript" src="../libs/jquery.mousewheel.min.js"></script>
 		<script type="text/javascript" src="../libs/imgViewer.min.js"></script>
+		<script type="text/javascript" src="../libs/printThis.js"></script>
 		<script type="text/javascript" src="../src/imgNotes.js"></script>
 		
 		<style type="text/css">
@@ -48,18 +48,22 @@
 		<div id="imgdiv" style="text-align: center;">
 			<img id="image" src="../image/test_image.jpg" style="border: 30px solid #ccc; padding:20px;" width="80%"/>
 			<br/>
-			<button id="toggleEdit">Edit</button>	<button id="export">Export</button>
+			<button id="toggleEdit">Edit</button>	<button id="export">Export</button> <button id="print">Print</button>
 
 		</div>
 		<div id=txt></div>
 <script type="text/javascript">
 ;(function($) {
 	$(document).ready(function() {
-		var $img = $("#image").imgNotes({zoom: 2});
+		var $img = $("#image").imgNotes({	onAdd: function() {
+										this.options.vAll = "bottom";
+										this.options.hAll = "middle";
+										return $(document.createElement("img")).attr({src:"marker_black.png",width: "27px",height: "40px"});
+								}
+		});
 		$img.imgNotes("import", [	{x: "0.5", y:"0.5", note:"AFL Grand Final Trophy"}, 
 									{x: "0.322", y:"0.269", note: "Brisbane Lions Flag"},
 									{x: "0.824", y: "0.593", note: "Fluffy microphone"}]);
-		$img.imgNotes("panTo", 0.5,0.0);
 		var $toggle = $("#toggleEdit");
 		
 		if ($img.imgNotes("option","canEdit")) {
@@ -86,6 +90,10 @@
 										$table.append("<tr><td>" + item.x + "</td><td>" + item.y + "</td><td>" + item.note + "</td></tr>");
 									});
 									$('#txt').html($table);
+		});
+		var $print = $("#print");
+		$print.on("click", function() {
+									$(".viewport").printThis({loadCSS:"marker.css"});
 		});
   });
 })(jQuery);
