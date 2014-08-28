@@ -192,7 +192,13 @@
 					break;
 			}
 		},
-		
+/*
+ *	Pan the view to be centred at the given relative image location
+ */
+		panTo: function(relx, rely) {
+			return $(this.img).imgViewer("panTo", relx, rely);
+		},
+			
 /*
  *	Add a note
  */

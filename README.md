@@ -62,29 +62,24 @@ Put an image element and a javascript block to attach the plugin to the image in
   * Controls if notes can be added and edited
   * Default: false
   * Example - to put the widget into edit mode:
-  
 ```javascript
 $("#image1").imgNotes("option", "canEdit", true);
 ```  
 
 ###vAll
-  * Controls the vertical positioning of the marker relative to the marker location
-   A change only affects markers subsequently inserted 
+  * Controls the vertical positioning of the marker relative to the marker location. The change only affects markers subsequently inserted
   * Valid Values: top, middle or bottom
   * Default: middle 
   * Example - to put the bottom of the marker element at the note location:
-  
 ```javascript
 $("#image1").imgNotes("option", "vAll", "bottom");
 ``` 
   
 ###hAll
-  * Controls the horizontal positioning of the marker relative to the marker location
-   A change only affects markers subsequently inserted 
+  * Controls the horizontal positioning of the marker relative to the marker location. The change only affects markers subsequently inserted 
   * Valid Values: left, middle or right
   * Default: middle 
   * Example - to put the left side of the marker element at the note location:
-  
 ```javascript
 $("#image1").imgNotes("option", "hAll", "left");
 ``` 
@@ -93,7 +88,6 @@ $("#image1").imgNotes("option", "hAll", "left");
   * How much the zoom changes for each mousewheel click - must be a positive number
   * Default: 0.1
   * Example:
-
 ```javascript
 $("#image1").imgNotes("option", "zoomStep", 0.05);
 ```
@@ -102,7 +96,6 @@ $("#image1").imgNotes("option", "zoomStep", 0.05);
   * Get/Set the current zoom level of the image - must be >= 1
   * Default: 1 (ie the entire image is visible)
   * Example - to display the image magnified 3x:
-
 ```javascript
 $("#image1").imgNotes("option", "zoom", 3);
 ```
@@ -111,21 +104,16 @@ $("#image1").imgNotes("option", "zoom", 3);
   * Controls if image will be zoomable
   * Default: true
   * Example - to disble image zooming:
-
 ```javascript
 $("#image1").imgNotes("option", "zoomable", false);
 ```
 
 ###onAdd
-  * Callback triggered when a marker/note is added to the widget to allow developers to define their own markers
-   This will happen when notes are imported using the "import" method and when the user clicks on the widget in edit mode
-   Within the callback "this" refers to the imgNotes widget
+  * Callback triggered when a marker/note is added to the widget to allow developers to define their own markers. This will happen when notes are imported using the "import" method and when the user clicks on the widget in edit mode. Within the callback "this" refers to the imgNotes widget.
   * Default: Inserts a numbered inverted black teardrop image aligned to point at the insertion point
   * Callback Arguments: none
   * Callback Returns: the new marker element
   * Example:
-  
-
 ```javascript
 $("#image1").imgNotes("option", "onAdd", function() {
 	this.options.vAll = "bottom";
@@ -134,27 +122,43 @@ $("#image1").imgNotes("option", "onAdd", function() {
 });
 ```
 ###onEdit
-  * Callback triggered by a mouseclick on the image, to insert a new marker/note, or on an exisitng marker to edit the note 
-   when the widget is in edit mode (canEdit: true). Please use the default implementation as a guide to implement a custom interface. 
+  * Callback triggered by a mouseclick on the image, to insert a new marker/note, or on an exisitng marker to edit the note when the widget is in edit mode (canEdit: true). Please use the default implementation as a guide to implement a custom interface. 
   * Default: Open a dialog box with a simple textarea to add/edit the note
   * Callback Arguments:
 	* ev: the click event
 	* elem: the marker DOM element 
 
 ###onShow
-  * Callback triggered by a mouseclick on an existing marker when the widget is in view mode (canEdit: false).
-   Please use the default implementation as a guide to implement a custom interface.
+  * Callback triggered by a mouseclick on an existing marker when the widget is in view mode (canEdit: false). Please use the default implementation as a guide to implement a custom interface.
   * Default: Open a dialog box to show the note
   * Callback Arguments:
 	* ev: the click event
 	* elem: the marker DOM element 
 
 ###onUpdateMarker
-   * Callback triggered when a marker is redrawn
-    Within the callback "this" refers to the imgNotes widget
+   * Callback triggered when a marker is redrawn. Within the callback "this" refers to the imgNotes widget.
    * Default: Display the marker at its original size on the image positioned according to the vAll and hAll alignment options
    * Callback Arguments:
      * elem: the marker DOM element
+   * Example
+```javascript
+$("#image").imgNotes({
+        onUpdateMarker: function(elem) {
+        	var $elem = $(elem);
+			var $img = $(this.img);
+			var pos = $img.imgViewer("imgToView", $elem.data("relx"), $elem.data("rely"));
+			var zoom = $img.imgViewer("option", "zoom");
+			if (pos) {
+				$elem.css({
+					left: (pos.x - $elem.data("xOffset")),
+					top: (pos.y - $elem.data("yOffset")),
+					position: "absolute",
+					transform: "scale(" + zoom + "," + zoom + ")"
+				});
+			}
+		}
+});
+```
 
 ## Public Methods
 
@@ -168,39 +172,83 @@ $("#image1").imgNotes("option", "onAdd", function() {
 	* rely: relative y image coordinate for the marker
 	* note: the note text which can include html
   * Returns the marker element
+  * Example
+```javascript
+elem = $("#image1").imgNotes("addNote", 0.4,0.3,"Note <b>Text</b>");
+```
   
 ###count
   * Get the number of notes in the widget
   * Arguments: none
-  * Returns: the widget object for chainability
+  * Returns: the number of notes in the widget
+  * Example
+```javascript
+count = $("#image1").imgNotes("count");
+```
   
 ###clear
   * Delete all the notes from the widget
   * Arguments: none
   * Returns: the widget object for chainability
+  * Example
+```javascript
+$("#image1").imgNotes("clear");
+```
 
 ###import
   * Add notes from a javascript array to the widget
   * Arguments - a javascript array of note objects:
-	* [{
-	*		x: relative x image coordinate,
-	*		y: relative y image coordinate,
-	*		note: the note text
-	* }, ...
-	* ]
+    ```javascript
+    [
+     {
+    	x: relative x image coordinate,
+    	y: relative y image coordinate,
+		note: the note text
+     },...
+    ]
+    ```
   * Returns: the widget object for chainability
+  * Example
+```javascript
+$("#image1").imgNotes("import", [ {x: "0.5", y:"0.5", note:"AFL Grand Final Trophy"}, 
+								      {x: "0.322", y:"0.269", note: "Brisbane Lions Flag"},
+								      {x: "0.824", y: "0.593", note: "Fluffy microphone"}]);
+```
   
 ###export
   * Export notes in the widget to a javascript array
   * Arguments: none
   * Returns - a javascript array of note objects:
-	* [{
-	*		x: relative x image coordinate,
-	*		y: relative y image coordinate,
-	*		note: the note text
-	* }, ...
-	* ]
+    ```javascript
+    [{  x: relative x image coordinate,
+    	y: relative y image coordinate,
+		note: the note text },
+     ...
+    ]
+    ```
+  * Example:
+```javascript
+notes = $("#image1").imgNotes("export");
+```
 
+###panTo
+  * Pan the view to be centred at the given relative image coordinates
+  * Arguments:
+	relx: relative x image coordinate
+	rely: relative y image coordinate
+  * Returns a javascript object with the relative image coordinates of the view centre after snapping the edges of the zoomed image to the view boundaries.
+```javascript
+	{ 
+        x: view center relative x image coordinate, 
+        y: view center relative y image coordinate
+    }
+```
+  * Returns null if the relative image coordinates are not >=0 and <=1 and the view is not changed.
+  * Example:
+```javascript
+$("#image1").imgNotes("panTo", 0.5,0.0);
+```
+  
 ## License
 
 This plugin is provided under the [MIT License](http://opensource.org/licenses/MIT). 
@@ -226,6 +274,7 @@ Copyright (c) 2013 Wayne Mogg.
 ### 0.7.4
 - Simplify signature for onUpdateMarker callback
 - Fix call of onUpdateMarker in addNote method - fixes bug with markers not displayed on first load
+- Add panTo method
 
 
 

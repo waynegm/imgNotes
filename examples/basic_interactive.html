@@ -45,7 +45,7 @@
 			and edit and a button to export the notes to a table below the image.
 		</p>
 
-		<div id="imgdiv" style="text-align: center">
+		<div id="imgdiv" style="text-align: center;">
 			<img id="image" src="../image/test_image.jpg" style="border: 30px solid #ccc; padding:20px;" width="80%"/>
 			<br/>
 			<button id="toggleEdit">Edit</button>	<button id="export">Export</button>
@@ -55,11 +55,13 @@
 <script type="text/javascript">
 ;(function($) {
 	$(document).ready(function() {
-		var $img = $("#image").imgNotes();
+		var $img = $("#image").imgNotes({zoom: 2});
 		$img.imgNotes("import", [	{x: "0.5", y:"0.5", note:"AFL Grand Final Trophy"}, 
 									{x: "0.322", y:"0.269", note: "Brisbane Lions Flag"},
 									{x: "0.824", y: "0.593", note: "Fluffy microphone"}]);
+		$img.imgNotes("panTo", 0.5,0.0);
 		var $toggle = $("#toggleEdit");
+		
 		if ($img.imgNotes("option","canEdit")) {
 			$toggle.text("View");
 		} else {
