@@ -56,10 +56,14 @@
 ;(function($) {
 	$(document).ready(function() {
 		var $img = $("#image").imgNotes({	onAdd: function() {
-										this.options.vAll = "bottom";
-										this.options.hAll = "middle";
-										return $(document.createElement("img")).attr({src:"marker_black.png",width: "27px",height: "40px"});
-								}
+				this.options.vAll = "bottom";
+				this.options.hAll = "middle";
+				elem = $(document.createElement('div'))
+				       .css({width:'27px', height:'40px','text-align':'center',color:'#fff','font-weight':'bold', 'font-size':'14px'})
+				       .append($('<p>'+this.noteCount+'</p>').css({'z-index':1, position:'relative', top:'-8px'}))
+				       .prepend($('<img>',{src: 'marker_black.png', width:'27px', height:'40px'}).css({position:'absolute', top:'0px', left:'0px'}));
+				return elem;
+			}
 		});
 		$img.imgNotes("import", [	{x: "0.5", y:"0.5", note:"AFL Grand Final Trophy"}, 
 									{x: "0.322", y:"0.269", note: "Brisbane Lions Flag"},
@@ -93,7 +97,7 @@
 		});
 		var $print = $("#print");
 		$print.on("click", function() {
-									$(".viewport").printThis({loadCSS:"marker.css"});
+									$(".viewport").printThis();
 		});
   });
 })(jQuery);
