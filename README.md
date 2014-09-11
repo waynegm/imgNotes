@@ -275,6 +275,8 @@ Copyright (c) 2013 Wayne Mogg.
 - Simplify signature for onUpdateMarker callback
 - Fix call of onUpdateMarker in addNote method - fixes bug with markers not displayed on first load
 - Add panTo method
+- Add jQuery Mobile example
+
 
 
 

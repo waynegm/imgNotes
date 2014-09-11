@@ -1,4 +1,4 @@
-/*! jQuery imgNotes - v0.7.4 - 2014-08-05
+/*! jQuery imgNotes - v0.7.4 - 2014-09-11
 * https://github.com/waynegm/imgNotes
 * Copyright (c) 2014 Wayne Mogg; Licensed MIT */
 ;(function($) {
@@ -188,7 +188,13 @@
 					break;
 			}
 		},
-		
+/*
+ *	Pan the view to be centred at the given relative image location
+ */
+		panTo: function(relx, rely) {
+			return $(this.img).imgViewer("panTo", relx, rely);
+		},
+			
 /*
  *	Add a note
  */
