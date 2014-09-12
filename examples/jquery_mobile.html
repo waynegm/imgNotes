@@ -74,12 +74,14 @@
 			},
 			onEdit: function(ev, elem) {
 				var $elem = $(elem);
-				$("#saveButton").off('tap').on('tap', function() {
+				$("#saveButton").off('tap').on('tap', function(ev) {
+					ev.preventDefault();
 					var txt = $("#editNote textarea").val();
 					$elem.data("note", txt);
 					$("#editNote").popup("close");
 				});
-				$("#deleteButton").off('tap').on('tap', function() {
+				$("#deleteButton").off('tap').on('tap', function(ev) {
+					ev.preventDefault();
 					$elem.trigger("remove");
 					var notes = $img.imgNotes("export");
 					$img.imgNotes("clear");
