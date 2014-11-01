@@ -1,4 +1,4 @@
-/*! jQuery imgNotes - v0.7.4 - 2014-09-12
+/*! jQuery imgNotes - v0.7.4 - 2014-11-01
 * https://github.com/waynegm/imgNotes
 * Copyright (c) 2014 Wayne Mogg; Licensed MIT */
 ;(function($) {
@@ -92,7 +92,7 @@
 /*
  *	Default callback when the markers are repainted
  */
-	onUpdateMarker: function(elem) {
+			onUpdateMarker: function(elem) {
 				var $elem = $(elem);
 				var $img = $(this.img);
 				var pos = $img.imgViewer("imgToView", $elem.data("relx"), $elem.data("rely"));
@@ -103,6 +103,15 @@
 						position: "absolute"
 					});
 				}
+			},
+/*
+ *	Default callback when the image view is repainted
+ */
+			onUpdate: function() {
+				var self = this;
+				$.each(this.notes, function() {
+					self.options.onUpdateMarker.call(self, this);
+				});
 			}
 		},
 		
@@ -133,10 +142,7 @@
 							},
 							onUpdate: function(ev, imgv) {
 								self.options.zoom = imgv.options.zoom;
-								$.each(self.notes, function() {
-									self.options.onUpdateMarker.call(self, this);
-									
-								});
+								self.options.onUpdate.call(self);
 							},
 							zoom: self.options.zoom,
 							zoomStep: self.options.zoomStep,
@@ -227,7 +233,8 @@
 			$elem.on("remove", function() {
 				self._delete(elem);
 			});
-			self.options.onUpdateMarker.call(self, elem);
+//			self.options.onUpdateMarker.call(self, elem);
+			
 			this.notes.push(elem);
 			return elem;
 		},
@@ -243,6 +250,7 @@
 		_delete: function(elem) {
 			this.notes = this.notes.filter(function(v) { return v!== elem; });
 			$(elem).remove();
+			$(this.img).imgViewer("update");
 		},
 /*
  *	Clear all notes
@@ -264,6 +272,7 @@
 			$.each(notes, function() {
 				self.addNote(this.x, this.y, this.note);
 			});
+			$(this.img).imgViewer("update");
 		},
 /*
  *	Export notes to an array

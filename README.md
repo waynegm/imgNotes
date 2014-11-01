@@ -160,6 +160,21 @@ $("#image").imgNotes({
 });
 ```
 
+###onUpdate
+   * Callback triggered when the view is redrawn. Within the callback "this" refers to the imgNotes widget.
+   * Default: Display the markers by calling onUpdateMarker for each note
+   * Example
+```javascript
+$("#image").imgNotes({
+        onUpdate: function() {
+				var self = this;
+				$.each(this.notes, function() {
+					self.options.onUpdateMarker.call(self, this);
+				});
+			}
+});
+```
+
 ## Public Methods
 
 ###addNote
@@ -277,6 +292,10 @@ Copyright (c) 2013 Wayne Mogg.
 - Add panTo method
 - Add printing example
 - Add jQuery Mobile example
+
+### 0.7.5
+- Add onUpdate callback
+- Add onUpdate callback example that links the markers with a line
 
 
 

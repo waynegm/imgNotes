@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>jQuery imgNotes - Custom Update View</title>
+		<style type="text/css" media="all">@import "../css/marker.css";</style>
+		
+		<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" media="screen">
+		<script type="text/javascript" src="../libs/jquery/jquery.js"></script>
+		<script type="text/javascript" src="../libs/jquery/jquery-ui.js"></script>
+		<script type="text/javascript" src="../libs/jquery.fs.zoetrope.min.js"></script>
+		<script type="text/javascript" src="../libs/toe.min.js"></script>
+		<script type="text/javascript" src="../libs/jquery.mousewheel.min.js"></script>
+		<script type="text/javascript" src="../libs/imgViewer.min.js"></script>
+		<script type="text/javascript" src="../src/imgNotes.js"></script>
+
+		<style type="text/css">
+		table.gridtable {
+			font-family: verdana,arial,sans-serif;
+			font-size:11px;
+			color:#333333;
+			border-width: 1px;
+			border-color: #666666;
+			border-collapse: collapse;
+		}
+		table.gridtable th {
+			border-width: 1px;
+			padding: 8px;
+			border-style: solid;
+			border-color: #666666;
+			background-color: #dedede;
+		}
+		table.gridtable td {
+			border-width: 1px;
+			padding: 8px;
+			border-style: solid;
+			border-color: #666666;
+			background-color: #ffffff;
+		}
+	</style>
+	</head>
+	<body>
+		<h1 style="text-align: center;">jQuery imgNotes - Custom Update View Example</h1>
+		<p>
+			This example demonstrates a custom implementation of the "onUpdate" callback to repaint the note markers. 
+			This implementations draws lines between the markers.
+		</p>
+		<div id="imgdiv" style="text-align: center">
+			<img id="image" src="../image/test_image.jpg" style="border: 30px solid #ccc; padding:20px;" width="80%"/>
+			<br/>
+			<button id="toggleEdit">Edit</button>	<button id="export">Export</button>
+
+		</div>
+		<div id=txt></div>
+<script type="text/javascript">
+;(function($) {
+	$(document).ready(function() {
+	    function createLine(x1, y1, x2, y2, options){
+			defaults = {
+				zindex : 10000,
+				color : '#000000',
+				stroke: "1",
+				style: "solid",
+			};
+			options = $.extend({}, defaults, options);
+
+			if (x2 < x1){
+				var temp = x1;
+				x1 = x2;
+				x2 = temp;
+				temp = y1;
+				y1 = y2;
+				y2 = temp;
+			}
+			var length = Math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2));
+            var angle = Math.atan((y2-y1)/(x2-x1));
+			var line = $(document.createElement('div')).css({
+				left: (x1 - 0.5*length*(1 - Math.cos(angle))) + "px",
+				top: (y1 + 0.5*length*Math.sin(angle)) + "px",
+				width: length,
+				borderBottom: options.stroke + "px " + options.style,
+				borderColor: options.color,
+				position: "absolute",
+				transform: "rotate(" + angle + "rad)"
+			});
+			return line;
+		}
+
+		var $img = $("#image").imgNotes({
+						onUpdate: function() {
+							var self = this;
+						// Delete the lines
+							$('.mkr_line').remove();
+						// Draw the lines
+							var isFirst = true;
+							var lastPos;
+							$.each(this.notes, function() {
+								var $mkr = $(this);
+								var pos = $img.imgViewer("imgToView", $mkr.data("relx"), $mkr.data("rely"));
+								if (isFirst === false) {
+									var elem = createLine(lastPos.x, lastPos.y, pos.x, pos.y, {stroke: "3", color:"red"});
+									elem.addClass('mkr_line');
+									$(self.img).imgViewer("addElem",elem);
+								}
+								lastPos = pos;
+								isFirst = false;
+							});
+						// Show the markers	
+							$.each(this.notes, function() {
+								self.options.onUpdateMarker.call(self, this);
+							});
+						}
+		});
+		$img.imgNotes("import", [	{x: "0.5", y:"0.5", note:"AFL Grand Final Trophy"}, 
+									{x: "0.322", y:"0.269", note: "Brisbane Lions Flag"},
+									{x: "0.824", y: "0.593", note: "Fluffy microphone"}]);
+		var $toggle = $("#toggleEdit");
+		if ($img.imgNotes("option","canEdit")) {
+			$toggle.text("View");
+		} else {
+			$toggle.text("Edit");
+		}
+		$toggle.on("click", function() {
+									var $this = $(this);
+									if ($this.text()=="Edit") {
+										$this.text("View");
+										$img.imgNotes("option", "canEdit", true);
+									} else {
+										$this.text('Edit');
+										$img.imgNotes('option', 'canEdit', false);
+									}
+		});
+		var $export = $("#export");
+		$export.on("click", function() {
+									var $table = $("<table/>").addClass("gridtable");
+									var notes = $img.imgNotes('export');
+									$table.append("<th>X</th><th>Y</th><th>NOTE</th>"); 
+									$.each(notes, function(index, item) {
+										$table.append("<tr><td>" + item.x + "</td><td>" + item.y + "</td><td>" + item.note + "</td></tr>");
+									});
+									$('#txt').html($table);
+		});
+  });
+})(jQuery);
+</script>
+</body>
+</html>
