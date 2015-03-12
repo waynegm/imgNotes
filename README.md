@@ -296,6 +296,8 @@ Copyright (c) 2013 Wayne Mogg.
 ### 0.7.5
 - Add onUpdate callback
 - Add onUpdate callback example that links the markers with a line
+- Fix bug affecting display of newly inserted markers and position of edit dialog
+
 
 
 

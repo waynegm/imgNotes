@@ -1,6 +1,6 @@
-/*! jQuery imgNotes - v0.7.4 - 2014-11-01
+/*! jQuery imgNotes - v0.7.5 - 2015-03-12
 * https://github.com/waynegm/imgNotes
-* Copyright (c) 2014 Wayne Mogg; Licensed MIT */
+* Copyright (c) 2015 Wayne Mogg; Licensed MIT */
 ;(function($) {
 	$.widget("wgm.imgNotes", {
 		options: {
@@ -233,9 +233,8 @@
 			$elem.on("remove", function() {
 				self._delete(elem);
 			});
-//			self.options.onUpdateMarker.call(self, elem);
-			
 			this.notes.push(elem);
+			$(this.img).imgViewer("update");
 			return elem;
 		},
 /*

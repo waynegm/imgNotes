@@ -237,9 +237,8 @@
 			$elem.on("remove", function() {
 				self._delete(elem);
 			});
-//			self.options.onUpdateMarker.call(self, elem);
-			
 			this.notes.push(elem);
+			$(this.img).imgViewer("update");
 			return elem;
 		},
 /*

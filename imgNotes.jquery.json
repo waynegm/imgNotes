@@ -25,7 +25,7 @@
     "toe.js":  ">=3.0",
     "zoetrope": ">=3.0",
     "jquery-mousewheel": ">=3.0",
-    "jQuery imgViewer": ">=0.7.2"
+    "jQuery imgViewer": ">=0.7.3"
   },
   "keywords": [
       "jQuery",
