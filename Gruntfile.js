@@ -39,8 +39,8 @@ module.exports = function(grunt) {
 			options: {
 				urls: (function() {
 							var res = [];
-							['2.1.0', '2.0.3', '1.10.2', '1.9.1', '1.8.3' ].forEach( function(jqversion) {
-								['1.10.4', '1.9.2', '1.8.24'].forEach( function(uiversion) {
+							['2.1.3', '2.0.3', '1.10.2', '1.9.1', '1.8.3' ].forEach( function(jqversion) {
+								['1.11.3','1.10.4', '1.9.2', '1.8.24'].forEach( function(uiversion) {
 									this.push('http://localhost:<%= connect.server.options.port %>/test/imgNotes.html?jquery=' + jqversion + '&jquery-ui=' + uiversion);
 								}, this);
 							}, res);
