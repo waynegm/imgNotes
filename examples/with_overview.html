@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>jQuery imgNotes - Interactive Base</title>
+		<style type="text/css" media="all">@import "../css/marker.css";</style>
+		
+		<link rel="stylesheet" href="../stylesheets/stylesheet.css" media="screen"/>
+		<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" media="screen">
+		<script type="text/javascript" src="../libs/jquery/jquery.js"></script>
+		<script type="text/javascript" src="../libs/jquery/jquery-ui.js"></script>
+		<script type="text/javascript" src="../libs/jquery.fs.zoetrope.min.js"></script>
+		<script type="text/javascript" src="../libs/toe.min.js"></script>
+		<script type="text/javascript" src="../libs/jquery.mousewheel.min.js"></script>
+		<script type="text/javascript" src="../libs/imgViewer.min.js"></script>
+		<script type="text/javascript" src="../libs/imgNotes.min.js"></script>
+		
+	</head>
+	<body>
+		<div class="wrapper">
+			<header>
+				<h1 class="title">jQuery imgNotes</h1>
+			</header>
+			<div id="container">
+				<p class="tagline">Image Overview/Panning Tool Example</p>
+				<div id="main" role="main" style="padding-bottom: 20px;">
+					<div class="download-bar">
+						<div class="inner">
+							<a href="https://github.com/waynegm/imgNotes/tarball/master" class="download-button tar"><span>Download</span></a>
+							<a href="https://github.com/waynegm/imgNotes/zipball/master" class="download-button zip"><span>Download</span></a>
+							<a href="https://github.com/waynegm/imgNotes" class="code">View imgNotes on GitHub</a>
+						</div>
+						<span class="blc"></span><span class="trc"></span>
+					</div>
+					<article class="markdown-body">
+						<p>This example demonstrates a no frills note editor with a button to toggle the widget mode between view
+							and edit and an image overview/panning tool constructed using the callbacks and functions exposed by the plugin.</p>
+					</article>
+				</div>
+			</div>
+		</div>
+		<br/>
+
+		<div id="imgdiv" style="text-align: center;">
+			<img id="image" src="https://raw.github.com/waynegm/imgNotes/master/image/test_image.jpg" style="border: 30px solid #555; padding:20px;" width="80%"/>
+			<br/>
+			<button id="toggleEdit">Edit</button>
+		<div id="imgnav" style="display: inline-block; position:relative;">
+			<img id="imgnav_img" src="https://raw.github.com/waynegm/imgNotes/master/image/test_image.jpg" style="height: 50px;"/>
+			<div id="imgnav_view" style="position:absolute; top: 0; left: 0 ;width: 40px; height: 20px;background-color: rgba(255,255,0,0.5); "></div>
+		</div>
+		</div>
+<script type="text/javascript">
+;(function($) {
+	$(document).ready(function() {
+		var $img = $("#image").imgNotes({
+					onUpdate: function() {
+								var self = this;
+								var view = $(self.img).imgViewer("getView");
+								var nw = $("#imgnav_img").width();
+								var nh = $("#imgnav_img").height();
+								var vTop = Math.round(view.top*nh),
+									vLeft = Math.round(view.left*nw),
+									vWidth = Math.round((view.right-view.left)*nw),
+									vHeight = Math.round((view.bottom-view.top)*nh);
+								
+								$("#imgnav_view").css({
+											top: vTop+"px",
+											left: vLeft+"px",
+											width: vWidth+"px",
+											height: vHeight+"px"
+								});
+								$.each(this.notes, function() {
+									self.options.onUpdateMarker.call(self, this);
+								});
+							}
+		});
+		$img.imgNotes("import", [	{x: "0.5", y:"0.5", note:"AFL Grand Final Trophy"}, 
+									{x: "0.322", y:"0.269", note: "Brisbane Lions Flag"},
+									{x: "0.824", y: "0.593", note: "Fluffy microphone"}]);
+		var $toggle = $("#toggleEdit");
+		
+		if ($img.imgNotes("option","canEdit")) {
+			$toggle.text("View");
+		} else {
+			$toggle.text("Edit");
+		}
+		$toggle.on("click", function() {
+									var $this = $(this);
+									if ($this.text()=="Edit") {
+										$this.text("View");
+										$img.imgNotes("option", "canEdit", true);
+									} else {
+										$this.text('Edit');
+										$img.imgNotes('option', 'canEdit', false);
+									}
+		});
+		$("#imgnav_view").draggable({
+			containment: "#imgnav_img",
+			drag: function( event, ui) {
+				var vTop = ui.helper[0].offsetTop,
+					vLeft = ui.helper[0].offsetLeft,
+					vWidth = ui.helper[0].offsetWidth,
+					vHeight = ui.helper[0].offsetHeight;
+				var nw = $("#imgnav_img").width();
+				var nh = $("#imgnav_img").height();
+				$img.imgViewer("panTo", (vLeft+vWidth/2)/nw, (vTop+vHeight/2)/nh);	
+			}
+		});
+  });
+})(jQuery);
+</script>
+</body>
+</html>
