@@ -252,6 +252,7 @@
  */
 		_delete: function(elem) {
 			this.notes = this.notes.filter(function(v) { return v!== elem; });
+			$(elem).off();
 			$(elem).remove();
 			$(this.img).imgViewer("update");
 		},
@@ -260,12 +261,12 @@
  */
 		clear: function() {
 			var self = this;
-		    var total = self.notes.length;
-		    for ( var i = 0; i < total; i++ ){
-		        var $this = self.notes[i];
-		        $this.off();
-		        $this.remove();
-		    }
+			var total = self.notes.length;
+			for ( var i = 0; i < total; i++ ){
+				var $this = self.notes[i];
+				$this.off();
+				$this.remove();
+			}
 			self.notes=[];
 			self.noteCount = 0;
 		},

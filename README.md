@@ -210,6 +210,15 @@ count = $("#image1").imgNotes("count");
 $("#image1").imgNotes("clear");
 ```
 
+###destroy
+  * Delete all the notes and removes the widget
+  * Arguments: none
+  * Returns: nothing
+  * Example
+```javascript
+$("#image1").imgNotes("destroy");
+```
+
 ###import
   * Add notes from a javascript array to the widget
   * Arguments - a javascript array of note objects:
@@ -297,6 +306,10 @@ Copyright (c) 2013 Wayne Mogg.
 - Add onUpdate callback
 - Add onUpdate callback example that links the markers with a line
 - Fix bug affecting display of newly inserted markers and position of edit dialog
+
+### 0.7.6
+- turn events off before removing note markers - for better performance
+
 
 
 

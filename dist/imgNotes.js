@@ -1,4 +1,4 @@
-/*! jQuery imgNotes - v0.7.5 - 2015-03-12
+/*! jQuery imgNotes - v0.7.6 - 2015-06-13
 * https://github.com/waynegm/imgNotes
 * Copyright (c) 2015 Wayne Mogg; Licensed MIT */
 ;(function($) {
@@ -248,6 +248,7 @@
  */
 		_delete: function(elem) {
 			this.notes = this.notes.filter(function(v) { return v!== elem; });
+			$(elem).off();
 			$(elem).remove();
 			$(this.img).imgViewer("update");
 		},
@@ -256,10 +257,12 @@
  */
 		clear: function() {
 			var self = this;
-			$.each(self.notes, function() {
-				var $elem = $(this);
-				$elem.remove();
-			});
+			var total = self.notes.length;
+			for ( var i = 0; i < total; i++ ){
+				var $this = self.notes[i];
+				$this.off();
+				$this.remove();
+			}
 			self.notes=[];
 			self.noteCount = 0;
 		},

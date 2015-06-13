@@ -48,7 +48,7 @@
 		<div id="imgdiv" style="text-align: center;">
 			<img id="image" src="../image/test_image.jpg" style="border: 30px solid #ccc; padding:20px;" width="80%"/>
 			<br/>
-			<button id="toggleEdit">Edit</button>	<button id="export">Export</button> <button id="print">Print</button>
+			<button id="toggleEdit">Edit</button>	<button id="export">Export</button> <button id="clear">Clear</button> <button id="print">Print</button>
 
 		</div>
 		<div id=txt></div>
@@ -94,6 +94,10 @@
 										$table.append("<tr><td>" + item.x + "</td><td>" + item.y + "</td><td>" + item.note + "</td></tr>");
 									});
 									$('#txt').html($table);
+		});
+		var $clear = $("#clear");
+		$clear.on("click", function() {
+									$img.imgNotes('clear');
 		});
 		var $print = $("#print");
 		$print.on("click", function() {
