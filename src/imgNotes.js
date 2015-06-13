@@ -260,10 +260,12 @@
  */
 		clear: function() {
 			var self = this;
-			$.each(self.notes, function() {
-				var $elem = $(this);
-				$elem.remove();
-			});
+		    var total = self.notes.length;
+		    for ( var i = 0; i < total; i++ ){
+		        var $this = self.notes[i];
+		        $this.off();
+		        $this.remove();
+		    }
 			self.notes=[];
 			self.noteCount = 0;
 		},
