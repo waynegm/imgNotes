@@ -251,6 +251,7 @@
  *	Delete a note
  */
 		_delete: function(elem) {
+			this.noteCount--;
 			this.notes = this.notes.filter(function(v) { return v!== elem; });
 			$(elem).off();
 			$(elem).remove();
