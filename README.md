@@ -17,7 +17,7 @@ The plugin is known to work with the configuration described below:
  * [jQuery](http://jquery.com/) (>=1.8)
  * [jQuery UI](http://jqueryui.com/) (>=1.8)
     * [Widget Factory](http://api.jqueryui.com/jQuery.widget/)
- * [toe.js](https://github.com/visiongeist/toe.js) (>=3.0)
+ * [jquery.event.ue.js](https://github.com/mmikowski/jquery.event.ue) (>=0.4.3)
  * [Zoetrope](https://github.com/benplum/Zoetrope) (>=3.0)
  * [jquery-mousewheel](https://github.com/brandonaaron/jquery-mousewheel) (>=3.0)
  * [jQuery imgViewer](https://github.com/waynegm/imgViewer) (>=0.7.1)
@@ -33,7 +33,7 @@ Include either the development version or minified production version of the JS 
 	<script src="jquery.js"></script>
 	<script src="jquery-ui.js"></script>
 	<script src="jquery.fs.zoetrope.min.js"></script>
-	<script src="toe.min.js"></script>
+	<script src="jquery.event.ue.min.js"></script>
 	<script src="jquery.mousewheel.min.js"></script>
 	<script src="imgViewer.min.js"></script>
 	<script src="imgNotes.min.js"></script>
@@ -279,21 +279,16 @@ This plugin is provided under the [MIT License](http://opensource.org/licenses/M
 Copyright (c) 2013 Wayne Mogg.
 
 ## Release History
-### 0.6
-- First release
+### 0.8.0
+- Update to imgViewer 0.8.0
 
-### 0.7.1
-- Update to work with imgViewer 0.7.1
-- Add zoomable option to disable zooming
-- Updated Grunfile.js to include tests against latest version (2.1.0) of jQuery.
+### 0.7.6
+- turn events off before removing note markers - for better performance
 
-### 0.7.2
-- Bump version number for bug fix in imgViewer
-
-### 0.7.3
-- Add onUpdateMarker callback
-- Add example with custom onUpdateMarker
-- Fix so that zoom option value reflects zoom of underlying imgViewer
+### 0.7.5
+- Add onUpdate callback
+- Add onUpdate callback example that links the markers with a line
+- Fix bug affecting display of newly inserted markers and position of edit dialog
 
 ### 0.7.4
 - Simplify signature for onUpdateMarker callback
@@ -302,13 +297,21 @@ Copyright (c) 2013 Wayne Mogg.
 - Add printing example
 - Add jQuery Mobile example
 
-### 0.7.5
-- Add onUpdate callback
-- Add onUpdate callback example that links the markers with a line
-- Fix bug affecting display of newly inserted markers and position of edit dialog
+### 0.7.3
+- Add onUpdateMarker callback
+- Add example with custom onUpdateMarker
+- Fix so that zoom option value reflects zoom of underlying imgViewer
 
-### 0.7.6
-- turn events off before removing note markers - for better performance
+### 0.7.2
+- Bump version number for bug fix in imgViewer
+
+### 0.7.1
+- Update to work with imgViewer 0.7.1
+- Add zoomable option to disable zooming
+- Updated Grunfile.js to include tests against latest version (2.1.0) of jQuery.
+
+### 0.6
+- First release
 
 
 

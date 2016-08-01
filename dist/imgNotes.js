@@ -1,6 +1,6 @@
-/*! jQuery imgNotes - v0.7.6 - 2015-06-13
+/*! jQuery imgNotes - v0.8.0 - 2016-08-01
 * https://github.com/waynegm/imgNotes
-* Copyright (c) 2015 Wayne Mogg; Licensed MIT */
+* Copyright (c) 2016 Wayne Mogg; Licensed MIT */
 ;(function($) {
 	$.widget("wgm.imgNotes", {
 		options: {
@@ -247,6 +247,7 @@
  *	Delete a note
  */
 		_delete: function(elem) {
+			this.noteCount--;
 			this.notes = this.notes.filter(function(v) { return v!== elem; });
 			$(elem).off();
 			$(elem).remove();
