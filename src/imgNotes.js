@@ -11,6 +11,7 @@
 			zoom: 1,
 			zoomStep: 0.1,
 			zoomable: true,
+			dragable: true,
 			canEdit: false,
 			vAll: "middle",
 			hAll: "middle",
@@ -150,7 +151,8 @@
 							},
 							zoom: self.options.zoom,
 							zoomStep: self.options.zoomStep,
-							zoomable: self.options.zoomable
+							zoomable: self.options.zoomable,
+							dragable: self.options.dragable
 			});
 			$img.imgViewer("update");
 		},
@@ -195,6 +197,9 @@
 					break;
 				case 'zoomable':
 					$(this.img).imgViewer("option", "zoomable", value);
+					break;
+				case 'dragable':
+					$(this.img).imgViewer("option", "dragable", value);
 					break;
 			}
 		},
