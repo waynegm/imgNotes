@@ -97,7 +97,7 @@
 		});
 
 		var $toggleZ = $("#toggleZ");
-		if ($img.imgViewer("option","zoomable"))
+		if ($img.imgNotes("option","zoomable"))
 			$toggleZ.text("Zoom Off");
 		else
 			$toggleZ.text("Zoom On");
@@ -105,15 +105,15 @@
 											var $this = $(this);
 											if ($this.text()=="Zoom On") {
 												$this.text("Zoom Off");
-												$img.imgViewer("option","zoomable", true);
+												$img.imgNotes("option","zoomable", true);
 											} else {
 												$this.text("Zoom On");
-												$img.imgViewer("option","zoomable", false);
+												$img.imgNotes("option","zoomable", false);
 											}
 		});
 
 		var $toggleD = $("#toggleD");
-		if ($img.imgViewer("option","dragable"))
+		if ($img.imgNotes("option","dragable"))
 			$toggleD.text("Drag Off");
 		else
 			$toggleD.text("Drag On");
@@ -121,10 +121,10 @@
 											var $this = $(this);
 											if ($this.text()=="Drag On") {
 												$this.text("Drag Off");
-												$img.imgViewer("option","dragable", true);
+												$img.imgNotes("option","dragable", true);
 											} else {
 												$this.text("Drag On");
-												$img.imgViewer("option","dragable", false);
+												$img.imgNotes("option","dragable", false);
 											}
 		});
   });
