@@ -1,4 +1,4 @@
-/*! jQuery imgNotes - v0.8.0 - 2016-08-01
+/*! jQuery imgNotes - v0.9.0 - 2016-08-09
 * https://github.com/waynegm/imgNotes
 * Copyright (c) 2016 Wayne Mogg; Licensed MIT */
 ;(function($) {
@@ -7,6 +7,7 @@
 			zoom: 1,
 			zoomStep: 0.1,
 			zoomable: true,
+			dragable: true,
 			canEdit: false,
 			vAll: "middle",
 			hAll: "middle",
@@ -146,7 +147,8 @@
 							},
 							zoom: self.options.zoom,
 							zoomStep: self.options.zoomStep,
-							zoomable: self.options.zoomable
+							zoomable: self.options.zoomable,
+							dragable: self.options.dragable
 			});
 			$img.imgViewer("update");
 		},
@@ -191,6 +193,9 @@
 					break;
 				case 'zoomable':
 					$(this.img).imgViewer("option", "zoomable", value);
+					break;
+				case 'dragable':
+					$(this.img).imgViewer("option", "dragable", value);
 					break;
 			}
 		},
