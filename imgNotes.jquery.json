@@ -22,7 +22,7 @@
   "dependencies": {
     "jquery": ">=1.8",
     "jquery-ui": ">=1.8",
-    "jquery.event.ue.js":  ">=0.4.3",
+    "hammer.js & jquery.hammer.js":  "=2.0.1",
     "zoetrope": ">=3.0",
     "jquery-mousewheel": ">=3.0",
     "jQuery imgViewer": ">=0.7.3"

@@ -1,16 +1,8 @@
-(function(factory) {
-    if (typeof define === 'function' && define.amd) {
-        define(['jquery', 'hammerjs'], factory);
-    } else if (typeof exports === 'object') {
-        factory(require('jquery'), require('hammerjs'));
-    } else {
-        factory(jQuery, Hammer);
-    }
-}(function($, Hammer) {
+(function($, Hammer, dataAttr) {
     function hammerify(el, options) {
         var $el = $(el);
-        if(!$el.data("hammer")) {
-            $el.data("hammer", new Hammer($el[0], options));
+        if(!$el.data(dataAttr)) {
+            $el.data(dataAttr, new Hammer($el[0], options));
         }
     }
 
@@ -24,10 +16,10 @@
     Hammer.Manager.prototype.emit = (function(originalEmit) {
         return function(type, data) {
             originalEmit.call(this, type, data);
-            $(this.element).trigger({
+            jQuery(this.element).triggerHandler({
                 type: type,
                 gesture: data
             });
         };
     })(Hammer.Manager.prototype.emit);
-}));
+})(jQuery, Hammer, "hammer");

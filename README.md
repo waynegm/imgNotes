@@ -17,10 +17,12 @@ The plugin is known to work with the configuration described below:
  * [jQuery](http://jquery.com/) (>=1.8)
  * [jQuery UI](http://jqueryui.com/) (>=1.8)
     * [Widget Factory](http://api.jqueryui.com/jQuery.widget/)
- * [jquery.event.ue.js](https://github.com/mmikowski/jquery.event.ue) (>=0.4.3)
+ * [hammer.js & jquery.hammer.js](http://hammerjs.github.io/) (=2.0.1)
  * [Zoetrope](https://github.com/benplum/Zoetrope) (>=3.0)
  * [jquery-mousewheel](https://github.com/brandonaaron/jquery-mousewheel) (>=3.0)
  * [jQuery imgViewer](https://github.com/waynegm/imgViewer) (>=0.7.1)
+
+Note later versions of hammer.js, at least up to 2.0.8, don't work with Firefox.
 
 ## Usage
 
@@ -33,7 +35,8 @@ Include either the development version or minified production version of the JS 
 	<script src="jquery.js"></script>
 	<script src="jquery-ui.js"></script>
 	<script src="jquery.fs.zoetrope.min.js"></script>
-	<script src="jquery.event.ue.min.js"></script>
+	<script src="hammer.min.js"></script>
+	<script src="jquery.hammer.js"></script>
 	<script src="jquery.mousewheel.min.js"></script>
 	<script src="imgViewer.min.js"></script>
 	<script src="imgNotes.min.js"></script>
@@ -98,6 +101,13 @@ $("#image1").imgNotes("option", "zoomStep", 0.05);
   * Example - to display the image magnified 3x:
 ```javascript
 $("#image1").imgNotes("option", "zoom", 3);
+```
+###dragable
+  * Controls if image will be dragable
+  * Default: true
+  * Example - to disble image dragging:
+```javascript
+$("#image1").imgNotes("option", "dragable", false);
 ```
 
 ###zoomable
@@ -279,6 +289,10 @@ This plugin is provided under the [MIT License](http://opensource.org/licenses/M
 Copyright (c) 2013 Wayne Mogg.
 
 ## Release History
+### 0.8.0
+- Update to imgViewer 0.9.0
+- Add dragable option
+
 ### 0.8.0
 - Update to imgViewer 0.8.0
 

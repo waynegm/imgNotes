@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>jQuery imgNotes - Interactive Base</title>
+		<style type="text/css" media="all">@import "../css/marker.css";</style>
+		
+		<link rel="stylesheet" href="../stylesheets/stylesheet.css" media="screen"/>
+		<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" media="screen">
+		<script type="text/javascript" src="../libs/jquery/jquery.js"></script>
+		<script type="text/javascript" src="../libs/jquery/jquery-ui.js"></script>
+		<script type="text/javascript" src="../libs/jquery.fs.zoetrope.min.js"></script>
+		<script type="text/javascript" src="../libs/hammer.min.js"></script>
+		<script type="text/javascript" src="../libs/jquery.hammer.js"></script>
+		<script type="text/javascript" src="../libs/jquery.mousewheel.min.js"></script>
+		<script type="text/javascript" src="../libs/imgViewer.min.js"></script>
+		<script type="text/javascript" src="../src/imgNotes.js"></script>
+		
+		<style type="text/css">
+		table.gridtable {
+			font-family: verdana,arial,sans-serif;
+			font-size:11px;
+			color:#333333;
+			border-width: 1px;
+			border-color: #666666;
+			border-collapse: collapse;
+		}
+		table.gridtable th {
+			border-width: 1px;
+			padding: 8px;
+			border-style: solid;
+			border-color: #666666;
+			background-color: #dedede;
+		}
+		table.gridtable td {
+			border-width: 1px;
+			padding: 8px;
+			border-style: solid;
+			border-color: #666666;
+			background-color: #ffffff;
+		}
+	</style>
+	</head>
+	<body>		
+		<h1 style="text-align: center;">jQuery imgNotes - Zoom and Drag Control Example</h1>
+		<p>
+			This example demonstrates a no frills note editor with a button to toggle the widget mode between view
+			and edit, a button to toggle on/off zooming and a button to toggle off/on dragging of the image.
+		</p>
+		<br/>
+		<div id="imgdiv" style="text-align: center">
+			<img id="image" src="https://raw.github.com/waynegm/imgNotes/master/image/test_image.jpg" style="border: 30px solid #555; padding:20px;" width="80%"/>
+			<br/>
+			<button id="toggleE">Edit</button>	<button id="toggleZ">Zoom Off</button>	<button id="toggleD">Drag Off</button>
+
+		</div>
+		<br/>
+		<div id=txt></div>
+<script type="text/javascript">
+;(function($) {
+	$(document).ready(function() {
+		var $img = $("#image").imgNotes();
+		$img.imgNotes("import", [	{x: "0.5", y:"0.5", note:"AFL Grand Final Trophy"}, 
+									{x: "0.322", y:"0.269", note: "Brisbane Lions Flag"},
+									{x: "0.824", y: "0.593", note: "Fluffy microphone"}]);
+		var $toggleE = $("#toggleE");
+		if ($img.imgNotes("option","canEdit")) {
+			$toggleE.text("View");
+		} else {
+			$toggleE.text("Edit");
+		}
+		$toggleE.on("click", function() {
+									var $this = $(this);
+									if ($this.text()=="Edit") {
+										$this.text("View");
+										$img.imgNotes("option", "canEdit", true);
+									} else {
+										$this.text('Edit');
+										$img.imgNotes('option', 'canEdit', false);
+									}
+		});
+
+		var $toggleZ = $("#toggleZ");
+		if ($img.imgNotes("option","zoomable"))
+			$toggleZ.text("Zoom Off");
+		else
+			$toggleZ.text("Zoom On");
+		$toggleZ.on("click", function() {
+											var $this = $(this);
+											if ($this.text()=="Zoom On") {
+												$this.text("Zoom Off");
+												$img.imgNotes("option","zoomable", true);
+											} else {
+												$this.text("Zoom On");
+												$img.imgNotes("option","zoomable", false);
+											}
+		});
+
+		var $toggleD = $("#toggleD");
+		if ($img.imgNotes("option","dragable"))
+			$toggleD.text("Drag Off");
+		else
+			$toggleD.text("Drag On");
+		$toggleD.on("click", function() {
+											var $this = $(this);
+											if ($this.text()=="Drag On") {
+												$this.text("Drag Off");
+												$img.imgNotes("option","dragable", true);
+											} else {
+												$this.text("Drag On");
+												$img.imgNotes("option","dragable", false);
+											}
+		});
+  });
+})(jQuery);
+</script>
+</body>
+</html>
