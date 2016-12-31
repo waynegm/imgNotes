@@ -58,7 +58,7 @@
 <script type="text/javascript">
 ;(function($) {
 	$(document).ready(function() {
-		var $img = $("#image").imgNotes();
+		var $img = $("#image").imgNotes({zoomMax: 3});
 		$img.imgNotes("import", [	{x: "0.5", y:"0.5", note:"AFL Grand Final Trophy"}, 
 									{x: "0.322", y:"0.269", note: "Brisbane Lions Flag"},
 									{x: "0.824", y: "0.593", note: "Fluffy microphone"}]);

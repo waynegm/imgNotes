@@ -102,6 +102,15 @@ $("#image1").imgNotes("option", "zoomStep", 0.05);
 ```javascript
 $("#image1").imgNotes("option", "zoom", 3);
 ```
+
+###zoomMax
+  * Get/Set the limit on the maximum zoom level of the image - values less than 1 have no affect
+  * Default: 0 (ie no limit on zoom)
+  * Example - to restrict zoom to 3x or less:
+
+```javascript
+$("#image1").imgNotes("option", "zoomMax", 3);
+```
 ###dragable
   * Controls if image will be dragable
   * Default: true
@@ -289,7 +298,11 @@ This plugin is provided under the [MIT License](http://opensource.org/licenses/M
 Copyright (c) 2013 Wayne Mogg.
 
 ## Release History
-### 0.8.0
+### 0.9.1
+- Update to imgViewer 0.9.1
+- Add zoomMax option
+
+### 0.9.0
 - Update to imgViewer 0.9.0
 - Add dragable option
 

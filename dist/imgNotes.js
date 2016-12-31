@@ -1,4 +1,4 @@
-/*! jQuery imgNotes - v0.9.0 - 2016-08-09
+/*! jQuery imgNotes - v0.9.1 - 2016-12-31
 * https://github.com/waynegm/imgNotes
 * Copyright (c) 2016 Wayne Mogg; Licensed MIT */
 ;(function($) {
@@ -6,6 +6,7 @@
 		options: {
 			zoom: 1,
 			zoomStep: 0.1,
+			zoomMax: 0,
 			zoomable: true,
 			dragable: true,
 			canEdit: false,
@@ -147,6 +148,7 @@
 							},
 							zoom: self.options.zoom,
 							zoomStep: self.options.zoomStep,
+							zoomMax: self.options.zoomMax,
 							zoomable: self.options.zoomable,
 							dragable: self.options.dragable
 			});
@@ -190,6 +192,9 @@
 					break;
 				case 'zoomStep':
 					$(this.img).imgViewer("option", "zoomStep", value);
+					break;
+				case 'zoomMax':
+					$(this.img).imgViewer("option", "zoomMax", value);
 					break;
 				case 'zoomable':
 					$(this.img).imgViewer("option", "zoomable", value);
