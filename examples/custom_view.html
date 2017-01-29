@@ -45,7 +45,7 @@
 			This example demonstrates using a tooltip to display the note. In this case I'm using the jQuery-ui tooltip and
 			activating the tooltip in a custom "onAdd" callback and setting the "onShow" callback to noop. Note that the 
 			jQuery ui tooltip widget seems to always require a title attribute on the tip target even if it isn't used for the 
-			tip. Also I haven't found a simple way to make the tip persist so you can interact with its content, eg click a link.
+			tip. A delay is added on the tooltip hide on mouseleave so the tip stays visible for clicking links in the content.
 		</p>
 		<div id="imgdiv" style="text-align: center">
 			<img id="image" src="../image/test_image.jpg" style="border: 30px solid #ccc; padding:20px;" width="80%"/>
@@ -67,7 +67,8 @@
 							$(elem).tooltip({
 									content: function() {
 												return $(elem).data("note");
-											}
+											},
+									hide: {delay:1000}
 							});
 							return elem;
 					} 
