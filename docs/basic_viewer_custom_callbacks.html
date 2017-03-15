@@ -117,15 +117,32 @@
 								},
 								{x: "0.82", y: "0.63", radius:"0.015", color: "white", note: "Fluffy microphone"}];
 				$(window).load(function() {
-
-					var $img = $("#image").imgNotes();
+				
+					default_onAdd = function() {
+						this.options.vAll = "bottom";
+						this.options.hAll = "middle";
+						var elem = $(document.createElement('div')).addClass("marker").append($('<p class="marker-text">'+(this.notes.length+1)+'</p>')).prepend($('<img>',{src: '/imgNotes/lib/images/marker_black.png', width:'100%'})).attr("title","");
+						$(elem).tooltip({
+							content: function() {
+								return $(elem).data("note").note;
+							},
+							show: false,
+							hide: {delay:700},
+							position: {
+								within: $(this.view),
+								collision: "flipfit"
+							}
+						});
+						return elem;
+					};
+					
+					var $img = $("#image").imgNotes({onAdd: default_onAdd});
 					$img.imgNotes("import", default_notes);
 					
 					$("#print").on("click", function() {
 						$(".viewport").printThis({importStyle: true});
 					});
 
-					default_onAdd = $img.imgNotes("option", "onAdd");
 					default_onUpdateMarker = $img.imgNotes("option", "onUpdateMarker");
 					default_onUpdate = $img.imgNotes("option", "onUpdate");
 					colored_onAdd = function(note) {
