@@ -131,7 +131,7 @@
 					colored_onAdd = function(note) {
 						this.options.vAll = "bottom";
 						this.options.hAll = "middle";
-						var elem = $(document.createElement('div')).addClass("pin").append($('<p class="pin-text">'+(this.notes.length+1)+'</p>')).prepend($('<img>',{src: 'lib/images/box_pin.svg#'+note.color}).addClass("pin")).attr("title","");
+						var elem = $(document.createElement('div')).addClass("pin").append($('<p class="pin-text">'+(this.notes.length+1)+'</p>')).prepend($('<img>',{src: './lib/images/box_pin.svg#'+note.color}).addClass("pin")).attr("title","");
 						$(elem).tooltip({
 							content: function() {
 								return $(elem).data("note").note;

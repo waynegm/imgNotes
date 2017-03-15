@@ -21,7 +21,7 @@
 				this.options.vAll = "bottom";
 				this.options.hAll = "middle";
 				var elem = $(document.createElement('div')).addClass("marker").append($('<p class="marker-text">'+(this.notes.length+1)+'</p>'))
-																			  .prepend($('<img>',{src: 'lib/images/marker_black.png', width:'100%'})).attr("title","");
+																			  .prepend($('<img>',{src: './lib/images/marker_black.png', width:'100%'})).attr("title","");
 				$(elem).tooltip({
 					content: function() {
 						return $(elem).data("note").note;
