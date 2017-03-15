@@ -1,0 +1,207 @@
+# Plugin Options
+
+The widget options can be set at the time of creation:
+```javascript
+var $img = $("#image1").imgNotes({
+	dragable: false,
+	canEdit: false
+});
+```
+or afterwards by:
+```javascript
+$img.imgNotes("option", "zoomable", false);
+```
+The current value of an option can be retrieved by:
+```javascript
+$img.imgNotes("option", "zoomMax");
+```
+The options unique to this plugin are listed below. Because this plugin is an extension of the [imgViewer](https://github.com/waynegm/imgViewer) it also has all of the  [imgViewer options](https://github.com/waynegm/imgViewer/plugindocs/options.md) as well.
+
+##canEdit
+  * Controls if notes can be added or edited
+  * Default: false
+  * Example - to put the widget into edit mode:
+
+```javascript
+$("#image1").imgNotes("option", "canEdit", true);
+```  
+
+##vAll
+  * Controls the vertical positioning of the marker relative to the marker location. The change only affects markers subsequently inserted
+  * Valid Values: top, middle or bottom
+  * Default: middle 
+  * Example - to put the bottom of the marker element at the note location:
+
+```javascript
+$("#image1").imgNotes("option", "vAll", "bottom");
+``` 
+  
+##hAll
+  * Controls the horizontal positioning of the marker relative to the marker location. The change only affects markers subsequently inserted 
+  * Valid Values: left, middle or right
+  * Default: middle 
+  * Example - to put the left side of the marker element at the note location:
+
+```javascript
+$("#image1").imgNotes("option", "hAll", "left");
+``` 
+
+##onAdd
+  * Callback triggered when a marker/note is added to the widget to allow developers to define their own markers. This will happen when notes are imported using the "import" method and when the user clicks on the widget in edit mode. Within the callback `this` refers to the imgNotes widget.
+  * Default: Inserts a numbered inverted black teardrop image aligned to point at the insertion point
+  * Callback Arguments: 
+  	* note: javascript object containing the note data - at a minimum the object should have fields note.x, note.y and note.note where x and y are relative image coordinates of the note location and note the note text. 
+  * Callback Returns: the new marker element
+  * Example:
+
+```javascript
+$("#image1").imgNotes("option", "onAdd", function(note) {
+		this.options.vAll = "bottom";
+		this.options.hAll = "middle";
+		var elem = $(document.createElement('div')).addClass("tooltip").wrapInner('<span class="tooltiptext"></span>');
+		$(elem).find("span").html(note.note);
+		return elem;
+});
+```
+##onEdit
+  * Callback triggered by a mouseclick on the image, to insert a new marker/note, or on an exisitng marker to edit the note when the widget is in edit mode (canEdit: true). Within the callback `this` refers to the imgNotes widget.
+  * Default: is do nothing
+  * Callback Arguments:
+	* ev: the click event
+	* elem: the marker DOM element 
+ * Example - editing using a modal dialog:
+
+```javascript
+var $img = $("#image").imgNotes({
+	onEdit: function(ev, elem) {
+		var $elem = $(elem);
+		$('#NoteDialog').remove();
+		return $('<div id="NoteDialog"></div>').dialog({
+			title: "Note Editor",
+			resizable: false,
+			modal: true,
+			height: "300",
+			width: "450",
+			position: { my: "left bottom", at: "right top", of: elem},
+			buttons: {
+				"Save": function() {
+					var txt = $('textarea', this).val();
+					$elem.data("note").note = txt;
+					$(this).dialog("close");
+				},
+				"Delete": function() {
+					$elem.trigger("remove");
+					$(this).dialog("close");
+				},
+				Cancel: function() {
+					$(this).dialog("close");
+				}
+			},
+			open: function() {
+				$(this).css("overflow", "hidden");
+				var textarea = $('<textarea id="txt" style="height:100%; width:100%;">');
+				$(this).html(textarea);
+				textarea.val($elem.data("note").note);
+			}
+		});
+	}
+});
+```
+
+##onShow
+  * Callback triggered by a mouseclick on an existing marker when the widget is in view mode (canEdit: false). Within the callback `this` refers to the imgNotes widget.
+  * Default: is do nothing.
+  * Callback Arguments:
+	* ev: the click event
+	* elem: the marker DOM element 
+ * Example - editing using a modal dialog:
+
+```javascript
+var $img = $("#image").imgNotes({
+	onShow: function(ev, elem) {
+		var $elem = $(elem);
+		$('#NoteDialog').remove();
+		return $('<div id="NoteDialog"></div>').dialog({
+			modal: false,
+			resizable: false,
+			height: 300,
+			width: 250,
+			position: { my: "left bottom", at: "right top", of: elem, within: $imgd, collision: "flipfit"},
+			buttons: {
+				"Close" : function() {
+					$(this).dialog("close");
+				}
+			},
+			open: function() {
+				$(this).html($elem.data("note").note);
+				$(this).closest(".ui-dialog").find(".ui-dialog-titlebar:first").hide();
+				var dlg = this;
+				$(document).on('mousedown.mydialog', function(ev) {
+					if ($(dlg).dialog('isOpen') && !$.contains($(dlg).dialog('widget')[0], ev.target)) {
+						$(dlg).dialog('close');
+					}
+				});
+			},
+			close: function() {
+				$(document).off('mousedown.mydialog');
+				$(this).dialog("destroy");
+			}
+		});
+	}
+});
+```
+
+##onUpdateMarker
+   * Callback triggered when a marker is redrawn. Within the callback "this" refers to the imgNotes widget.
+   * Default: Display the marker at its original size on the image positioned according to the vAll and hAll alignment options
+   * Callback Arguments:
+     * elem: the marker DOM element
+   * Example
+
+```javascript
+$("#image").imgNotes({
+	onUpdateMarker: function(elem) {
+ 		var $elem = $(elem),
+			note = $elem.data("note");
+		var pos = this.imgToView(note.x, note.y);
+		if (pos) {
+			$elem.css({
+				left: (pos.x - $elem.data("xOffset")),
+				top: (pos.y - $elem.data("yOffset")),
+				position: "absolute"
+			});
+		}
+	}
+});
+```
+##onUpdate
+   * Callback triggered when the entire view needs to be repainted. Within the callback "this" refers to the imgNotes widget. The onUpdateMarker callback should be called on each note element as part of this is reimplemented.
+   * Default: Call the onUpdateMarker callback for each note element
+   * Callback arguments: none
+   * Example - connect the notes by a line
+
+```javascript
+$("#image").imgNotes({
+	onUpdate: function() {
+		var self = this;
+		$('.mkr_line').remove();
+		var isFirst = true,
+			lastPos;
+		$.each(this.notes, function() {
+			var note = $(this).data("note");
+			var pos = self.imgToView(note.x, note.y);
+			if (isFirst === false) {
+				var elem = createLine(lastPos.x, lastPos.y, pos.x, pos.y, {stroke: "3", color:"red"});
+				elem.addClass('mkr_line');
+				$(self.view).append(elem);
+			}
+			lastPos = pos;
+			isFirst = false;
+		});
+		$.each(this.notes, function() {
+			self.options.onUpdateMarker.call(self, this);
+		});
+	}
+});
+
+```

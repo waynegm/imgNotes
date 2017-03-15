@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>imgNotes Plugin - note display on fixed and dynamic size image example</title>
+		<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" media="screen">
+		<style type="text/css" media="all">@import "lib/imgNotes.css";</style>
+		<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+		<script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="https://unpkg.com/jquery-mousewheel@3.1.13"></script>
+		<script type="text/javascript" src="lib/hammer.min.js"></script>
+		<script type="text/javascript" src="https://unpkg.com/jquery-hammerjs@2.0.0"></script>
+		<script type="text/javascript" src="lib/imgViewer.js"></script>
+		<script type="text/javascript" src="lib/imgNotes.js"></script>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+	</head>
+	<body>
+		<table cellspacing="0" cellpadding="0" border="0" style="width: 100%; min-width: 320px;">
+			<tr>
+			<td style="padding: 10px">
+				<h1 align="center" >imgNotes Plugin - note display on fixed image size</h1>
+				<div align="center">
+					<img  id="image_fixed" src="images/test_image.jpg" width="800px" />
+				</div>
+				<p style="margin:10px 5% 10px 5%;text-align: justify;"> This example demonstrates display on a plain fixed size image. Zoom in and out using the mousewheel. Left mouseclick and drag to pan. On touch enabled devices pinch gestures can be used to zoom in and out and tap and drag to pan around.
+				</p>				
+			</td>
+			</tr>
+			<tr>
+			<td style="padding: 10px">
+				<h1 align="center" >imgNotes Plugin - note display on dynamic size image</h1>
+				<div align="center">
+					<img  id="image_dynamic" src="images/test_image.jpg" width="80%" />
+				</div>
+				<p style="margin:10px 5% 10px 5%;text-align: justify;"> This example demonstrates note display on a dynamic size image. Zoom in and out using the mousewheel. Left mouseclick and drag to pan. On touch enabled devices pinch gestures can be used to zoom in and out and tap and drag to pan around.
+				</p>				
+			</td>
+			</tr>
+		</table>
+
+
+		<script type="text/javascript">
+			;(function($) {
+
+				var default_notes = [	{x: "0.5", y:"0.5", note:"AFL Grand Final Trophy"}, 
+								{x: "0.322", y:"0.269", note: '\
+								<center><b>Brisbane Lions Flag</b><br/>\
+								<img src="http://www.lions.com.au/static-resources/themes/brisbane/images/logo-brisbane.png"/></center>\
+								<a href="http://www.lions.com.au/" target="blank">The Brisbane Lions</a> \
+								is an <a href="http://en.wikipedia.org/wiki/Australian_rules_football" target="blank">Australian rules football club.</a>'
+								},
+								{x: "0.824", y: "0.593", note: "Fluffy microphone"}];
+				$(window).load(function() {
+
+					var $imgf = $("#image_fixed").imgNotes();
+					$imgf.imgNotes("import", default_notes);
+
+					var $imgd = $("#image_dynamic").imgNotes({
+									onReady: function() {
+												this.import(default_notes);
+									}
+					});
+				});
+			})(jQuery);
+		</script>
+	</body>
+</html>

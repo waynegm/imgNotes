@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>imgNotes Plugin - wysiwyg note editor</title>
+		
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" media="screen">
+		<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+		
+		<script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+		<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.css" rel="stylesheet">
+		<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js"></script>
+		<script type="text/javascript" src="https://unpkg.com/jquery-mousewheel@3.1.13"></script>
+		<script type="text/javascript" src="lib/hammer.min.js"></script>
+		<script type="text/javascript" src="https://unpkg.com/jquery-hammerjs@2.0.0"></script>
+		<script type="text/javascript" src="lib/imgViewer.js"></script>
+		<style type="text/css" media="all">@import "lib/imgNotes.css";</style>
+		<script type="text/javascript" src="lib/imgNotes.js"></script>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+	</head>
+	<body>
+		<table cellspacing="0" cellpadding="0" border="0" style="width: 100%; min-width: 320px;">
+			<tr>
+			<td style="padding: 10px">
+				<h1 align="center" >imgNotes Plugin - wysiwyg note editor</h1>
+				<div align="center">
+					<img  id="image" src="images/test_image.jpg" width="80%" /><br/>
+				</div>
+			</td>
+			</tr>
+			<tr>
+			<td style="padding: 10px">
+				<div align="center">
+					<button id="toggleEdit">Edit</button> <button id="export">Export</button> <button id="clear">Clear</button>
+				</div>
+			</td>
+			</tr>
+			<tr>
+			<td style="text-align:center; padding: 10px">
+				<p style="margin:10px 5% 10px 5%;text-align: justify;"> This example demonstrates aadding a WYSIWYG note editor. 
+				</p>
+				<p style="margin:10px 5% 10px 5%;text-align: justify;">
+				Clicking the Edit button toggles the widget into edit mode and clicking the same button toogles back into display mode.In edit mode clicking on the image will insert a new marker and open up an edit dialog to add note text. Clicking on an exisiting notes will show the edit dialog. I am using the <a href="http://summernote.org/" target="blank">summernote</a> WYSIWIG editor as an example. The Export button shows the notes in a table at the bottom of the page. The Clear button erases all the notes.
+				</p>
+				<div id=txt align="center"></div>
+			</td>
+			</tr>
+		</table>
+		
+		
+		<script type="text/javascript">
+		;(function($) {
+			var notes = [{x: "0.5", y:"0.5", note:"AFL Grand Final Trophy"}, 
+						{x: "0.322", y:"0.269", note: '\
+						<center><b>Brisbane Lions Flag</b><br/>\
+						<img src="http://www.lions.com.au/static-resources/themes/brisbane/images/logo-brisbane.png"/></center>\
+						<a href="http://www.lions.com.au/" target="blank">The Brisbane Lions</a> \
+						is an <a href="http://en.wikipedia.org/wiki/Australian_rules_football" target="blank">Australian rules football club.</a>'
+						},
+						{x: "0.824", y: "0.593", note: "Fluffy microphone"}];
+
+				$(window).load(function() {
+//
+// Hack to get visibility of summernote link and picture dialogs
+//
+					$('<style />', {text: '.modal-backdrop.in {display: none;}'}).appendTo("head");
+
+					var $img = $("#image").imgNotes({
+						onEdit: function(ev, elem) {
+							var $elem = $(elem);
+							$('#NoteDialog').remove();
+							return $('<div id="NoteDialog"></div>').dialog({
+								title: "Note Editor",
+								resizable: false,
+								modal: true,
+								height: "400",
+								width: "450",
+								position: { my: "left bottom", at: "right top", of: elem},
+								buttons: {
+									"Save": function() {
+//										var txt = $('textarea', this).val();
+										$elem.data("note").note = $(this).summernote('code');
+										$(this).summernote('destroy');
+										$(this).dialog("close");
+									},
+									"Delete": function() {
+										$elem.trigger("remove");
+										$(this).summernote('destroy');
+										$(this).dialog("close");
+									},
+									Cancel: function() {
+										$(this).summernote('destroy');
+										$(this).dialog("close");
+									}
+								},
+									open: function() {
+										$(this).summernote({
+											toolbar: [
+												['all',['style','bold','italic','ol','ul','paragraph','link','picture']]
+											]
+										});
+										$(this).summernote('code', $elem.data("note").note);
+										
+									}
+							});
+						}
+					});
+					
+					$img.imgNotes("import", notes);
+
+					var $toggle = $("#toggleEdit");
+					if ($img.imgNotes("option","canEdit")) {
+						$toggle.text("View");
+					} else {
+						$toggle.text("Edit");
+					}
+					$toggle.on("click", function() {
+						var $this = $(this);
+						if ($this.text()=="Edit") {
+							$this.text("View");
+							$img.imgNotes("option", "canEdit", true);
+						} else {
+							$this.text('Edit');
+							$img.imgNotes('option', 'canEdit', false);
+						}
+					});
+					
+					var $export = $("#export");
+					$export.on("click", function() {
+						var $table = $("<table/>").addClass("gridtable");
+						var notes = $img.imgNotes('export');
+						$table.append("<th>X</th><th>Y</th><th>NOTE</th>"); 
+						$.each(notes, function(index, item) {
+							$table.append("<tr><td>" + item.x + "</td><td>" + item.y + "</td><td>" + item.note + "</td></tr>");
+						});
+						$('#txt').html($table);
+					});
+					
+					var $clear = $("#clear");
+					$clear.on("click", function() {
+						$img.imgNotes('clear');
+					});
+				});
+		})(jQuery);
+		</script>
+</body>
+</html>

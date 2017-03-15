@@ -1,0 +1,103 @@
+p {
+	font-family: "Times New Roman";
+	font-size: 14px;
+}
+
+.ui-widget-content {
+	font-family: "Times New Roman";
+}
+
+.ui-widget-content a {
+	color: blue;
+}
+
+.marker{
+	position: absolute;
+	width: 27px;
+	height: 40px;
+}
+
+.marker-text{
+	position:absolute;
+	top: 10%;
+	width:100%;
+	margin: 0 0 0 0;
+	z-index: 1;
+	font-size: 12px;
+	font-weight: bold;
+	text-align: center;
+	color: #fff;
+}
+
+.pin{
+	position: absolute;
+	width: 20px;
+	height: 30px;
+}
+
+.pin-text{
+	position: absolute;
+	top: 10%;
+	width:100%;
+	margin: 0 0 0 0;
+	font-size: 14px;
+	font-weight: bold;
+	text-align: center;
+	color: #000;
+}	
+
+/* Tooltip container */
+.tooltip {
+	position: relative;
+	display: inline-block;
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+	visibility: visible;
+	width: 180px;
+	background-color: white;
+	color: #000;
+	text-align: center;
+	padding: 5px 0;
+	border-radius: 6px;
+/* Position the tooltip text - see examples below! */
+	position: absolute;
+	z-index: 1;
+	bottom: 7px;
+	left: 50%;
+	margin-left: -90px;
+}
+.tooltip .tooltiptext::after {
+	content: "";
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	margin-left: -7px;
+	border-width: 7px;
+	border-style: solid;
+	border-color: white transparent transparent transparent;
+}
+
+table.gridtable {
+	font-family: verdana,arial,sans-serif;
+	font-size:11px;
+	color:#333333;
+	border-width: 1px;
+	border-color: #666666;
+	border-collapse: collapse;
+}
+table.gridtable th {
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #666666;
+	background-color: #dedede;
+}
+table.gridtable td {
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #666666;
+	background-color: #ffffff;
+}

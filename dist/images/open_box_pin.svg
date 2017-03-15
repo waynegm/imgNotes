@@ -1,0 +1,44 @@
+<svg 
+	xmlns="http://www.w3.org/2000/svg"
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	width="20"
+	height="450">
+	<defs>
+		<symbol id="open-box-pin" >
+			<path d="M 14.423345,0 H 5.5767866 C 2.5017385,0 -4.2200001e-8,2.3694675 -4.2200001e-8,5.281239 V 13.65807 C -4.2200001e-8,15.884169 1.4644032,17.788598 3.5266883,18.564331 l 6.4729802,11.43567 6.4736425,-11.43567 c 2.062947,-0.775733 3.526688,-2.680162 3.526688,-4.906261 V 5.281239 C 20.000066,2.3694675 17.498989,0 14.423345,0 Z"/>
+			<path fill="white" d="m 18.077531,13.65807 c 0,1.906875 -1.639125,3.459531 -3.653524,3.459531 H 5.5773827 c -2.0150613,0 -3.6535238,-1.552091 -3.6535238,-3.459531 V 5.281239 c 0,-1.9075026 1.6391249,-3.4601589 3.6535238,-3.4601589 h 8.8458963 c 2.015061,0 3.653524,1.5527191 3.653524,3.4601589 z" />
+		</symbol>
+	</defs>
+	<use xlink:href="#open-box-pin" x="0" y="0"   fill="black" />
+	<use xlink:href="#open-box-pin" x="0" y="30"   fill="red" />
+	<use xlink:href="#open-box-pin" x="0" y="60"   fill="orange" />
+	<use xlink:href="#open-box-pin" x="0" y="90"   fill="yellow" />
+	<use xlink:href="#open-box-pin" x="0" y="120"   fill="green" />
+	<use xlink:href="#open-box-pin" x="0" y="150"   fill="blue" />
+	<use xlink:href="#open-box-pin" x="0" y="180"   fill="indigo" />
+	<use xlink:href="#open-box-pin" x="0" y="210"   fill="violet" />
+	<use xlink:href="#open-box-pin" x="0" y="240"   fill="cyan" />
+	<use xlink:href="#open-box-pin" x="0" y="270"   fill="magenta" />
+	<use xlink:href="#open-box-pin" x="0" y="300"   fill="lime" />
+	<use xlink:href="#open-box-pin" x="0" y="330"   fill="olive" />
+	<use xlink:href="#open-box-pin" x="0" y="360"   fill="maroon" />
+	<use xlink:href="#open-box-pin" x="0" y="390"   fill="purple" />
+	<use xlink:href="#open-box-pin" x="0" y="420"   fill="#fff" />
+
+	<view id='black' viewBox='0 0 20 30' />
+	<view id='red' viewBox='0 30 20 30' />
+	<view id='orange' viewBox='0 60 20 30' />
+	<view id='yellow' viewBox='0 90 20 30' />
+	<view id='green' viewBox='0 120 20 30' />
+	<view id='blue' viewBox='0 150 20 30' />
+	<view id='indigo' viewBox='0 180 20 30' />
+	<view id='violet' viewBox='0 210 20 30' />
+	<view id='cyan' viewBox='0 240 20 30' />
+	<view id='magenta' viewBox='0 270 20 30' />
+	<view id='lime' viewBox='0 300 20 30' />
+	<view id='olive' viewBox='0 330 20 30' />
+	<view id='maroon' viewBox='0 360 20 30' />
+	<view id='purple' viewBox='0 390 20 30' />
+	<view id='white' viewBox='0 420 20 30' />
+</svg> 
+

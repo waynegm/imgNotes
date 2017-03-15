@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>imgNotes Plugin - note display using modal dialog</title>
+		<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" media="screen">
+		<style type="text/css" media="all">@import "lib/imgNotes.css";</style>
+		<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+		<script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="https://unpkg.com/jquery-mousewheel@3.1.13"></script>
+		<script type="text/javascript" src="lib/hammer.min.js"></script>
+		<script type="text/javascript" src="https://unpkg.com/jquery-hammerjs@2.0.0"></script>
+		<script type="text/javascript" src="lib/imgViewer.js"></script>
+		<script type="text/javascript" src="lib/imgNotes.js"></script>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+	</head>
+	<body>
+		<table cellspacing="0" cellpadding="0" border="0" style="width: 100%; min-width: 320px;">
+			<tr>
+			<td style="padding: 10px">
+				<h1 align="center" >imgNotes Plugin - note display using modal dialog</h1>
+				<div align="center">
+					<img  id="image_dynamic" src="images/test_image.jpg" width="90%" />
+				</div>
+				<p style="margin:10px 5% 10px 5%;text-align: justify;"> This example demonstrates note display using a modal dialog instead of a tooltip. This requires custom onAdd and onShow callbacks. The jQuery UI dislog is used for note display with the position attribute used to ensure the dialog is always within the image.
+				</p>				
+			</td>
+			</tr>
+		</table>
+
+
+		<script type="text/javascript">
+			;(function($) {
+
+				var default_notes = [	{x: "0.5", y:"0.5", note:"AFL Grand Final Trophy"}, 
+								{x: "0.322", y:"0.269", note: '\
+								<center><b>Brisbane Lions Flag</b><br/>\
+								<img src="http://www.lions.com.au/static-resources/themes/brisbane/images/logo-brisbane.png"/></center>\
+								<a href="http://www.lions.com.au/" target="blank">The Brisbane Lions</a> \
+								is an <a href="http://en.wikipedia.org/wiki/Australian_rules_football" target="blank">Australian rules football club.</a>'
+								},
+								{x: "0.824", y: "0.593", note: "Fluffy microphone"}];
+				$(window).load(function() {
+
+					var $imgd = $("#image_dynamic").imgNotes({
+						onAdd: function() {
+							this.options.vAll = "bottom";
+							this.options.hAll = "middle";
+							var elem = $(document.createElement('div')).addClass("marker").append($('<p class="marker-text">'+(this.notes.length+1)+'</p>')).prepend($('<img>',{src: 'lib/images/marker_black.png', width:'100%'}));
+							return elem;
+						},
+						onShow: function(ev, elem) {
+							var $elem = $(elem);
+							$('#NoteDialog').remove();
+							return $('<div id="NoteDialog"></div>').dialog({
+								modal: false,
+								resizable: false,
+								height: 300,
+								width: 250,
+								position: { my: "left bottom", at: "right top", of: elem, within: $imgd, collision: "flipfit"},
+								buttons: {
+									"Close" : function() {
+										$(this).dialog("close");
+									}
+								},
+								open: function() {
+//								Get the note text and put it into the textarea for editing
+									$(this).html($elem.data("note").note);
+									$(this).closest(".ui-dialog").find(".ui-dialog-titlebar:first").hide();
+									var dlg = this;
+									$(document).on('mousedown.mydialog', function(ev) {
+										if ($(dlg).dialog('isOpen') && !$.contains($(dlg).dialog('widget')[0], ev.target)) {
+											$(dlg).dialog('close');
+										}
+									});
+								},
+								close: function() {
+									$(document).off('mousedown.mydialog');
+									$(this).dialog("destroy");
+								}
+							});
+						}
+					});
+					$imgd.imgNotes("import", default_notes);
+
+				});
+			})(jQuery);
+		</script>
+	</body>
+</html>

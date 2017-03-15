@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>imgNotes Plugin - note display with custom markers</title>
+		<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" media="screen">
+		<style type="text/css" media="all">@import "lib/imgNotes.css";</style>
+		<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+		<script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="https://unpkg.com/jquery-mousewheel@3.1.13"></script>
+		<script type="text/javascript" src="lib/hammer.min.js"></script>
+		<script type="text/javascript" src="https://unpkg.com/jquery-hammerjs@2.0.0"></script>
+		<script type="text/javascript" src="lib/imgViewer.js"></script>
+		<script type="text/javascript" src="lib/imgNotes.js"></script>
+		<script type="text/javascript" src="lib/printThis.js"></script>
+		
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+	</head>
+	<body>
+		<table cellspacing="0" cellpadding="0" border="0" style="width: 100%; min-width: 320px;">
+			<tr>
+			<td style="padding: 10px">
+				<h1 align="center" >imgNotes Plugin - note display with custom markers</h1>
+				<div align="center">
+					<img  id="image" src="images/test_image.jpg" width="80%" /><br>
+					<button id="print">Print</button>
+				</div>
+			</td>
+			</tr>
+			<tr>
+			<td style="text-align:center; padding: 10px">
+				<div class="widget" style="display: inline-block;">
+					<fieldset>
+					<label for="default" >Default</label>
+					<input type="radio" name="example" id="default" value="default" checked></input>
+					<label for="colored" >Varying Color</label>
+					<input type="radio" name="example" id="colored" value="colored" ></input>
+					<label for="tooltip" >Tooltip</label>
+					<input type="radio" name="example" id="tooltip" value="tooltip" ></input>
+					<label for="circle" >Circles</label>
+					<input type="radio" name="example" id="circle" value="circle" ></input>
+					<label for="lines" >Lines</label>
+					<input type="radio" name="example" id="lines" value="lines" ></input>
+					</fieldset>
+				</div>
+				<p style="margin:10px 5% 10px 5%;text-align: justify;"> This example demonstrates how the appearance of markers can be changed by using custom callbacks and custom fields in a JSON notes array. Click the buttons to change the markers displayed. 
+				</p>
+				<p style="margin:10px 5% 10px 5%;text-align: justify;">
+				There is also a Print button that shows how to use the <a href="https://github.com/jasonday/printThis">printThis</a> jQuery plugin to print the image view with markers.
+				</p>
+				<p style="margin:10px 5% 10px 5%;text-align: justify;"> The custom callbacks required depend on the desired effect. Variable marker coloring and the tooltip style marker can be implemented with just custom onAdd callbacks. The circle marker, which has a fixed diameter relative to the image, requires both a custom onAdd and onUpdateMarker because the size of the html element (a div) must be adjusted if the image zoom changes. Joining the markers with a line requires a custom onUpdate callback.
+				</p>				
+
+			</td>
+			</tr>
+		</table>
+
+
+		<script type="text/javascript">
+			;(function($) {
+				$( "input" ).checkboxradio({
+					icon: false
+				});
+
+				function createLine(x1, y1, x2, y2, options){
+					defaults = {
+						zindex : 10000,
+						color : '#000000',
+						stroke: "1",
+						style: "solid",
+					};
+					options = $.extend({}, defaults, options);
+
+					if (x2 < x1){
+						var temp = x1;
+						x1 = x2;
+						x2 = temp;
+						temp = y1;
+						y1 = y2;
+						y2 = temp;
+					}
+					var length = Math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2));
+					var angle = Math.atan((y2-y1)/(x2-x1));
+					var line = $(document.createElement('div')).css({
+									left: (x1 - 0.5*length*(1 - Math.cos(angle))) + "px",
+									top: (y1 + 0.5*length*Math.sin(angle)) + "px",
+									width: length,
+									borderBottom: options.stroke + "px " + options.style,
+									borderColor: options.color,
+									position: "absolute",
+									transform: "rotate(" + angle + "rad)"
+					});
+					return line;
+				};
+
+				var default_notes = [	{x: "0.5", y:"0.5", note:"AFL Grand Final Trophy"}, 
+								{x: "0.322", y:"0.269", note: '\
+								<center><b>Brisbane Lions Flag</b><br/>\
+								<img src="http://www.lions.com.au/static-resources/themes/brisbane/images/logo-brisbane.png"/></center>\
+								<a href="http://www.lions.com.au/" target="blank">The Brisbane Lions</a> \
+								is an <a href="http://en.wikipedia.org/wiki/Australian_rules_football" target="blank">Australian rules football club.</a>'
+								},
+								{x: "0.824", y: "0.593", note: "Fluffy microphone"}];
+				var color_notes = [	{x: "0.5", y:"0.5", color:"white", note:"AFL Grand Final Trophy"}, 
+								{x: "0.322", y:"0.269", color:"red", note: '\
+								<center><b>Brisbane Lions Flag</b><br/>\
+								<img src="http://www.lions.com.au/static-resources/themes/brisbane/images/logo-brisbane.png"/></center>\
+								<a href="http://www.lions.com.au/" target="blank">The Brisbane Lions</a> \
+								is an <a href="http://en.wikipedia.org/wiki/Australian_rules_football" target="blank">Australian rules football club.</a>'
+								},
+								{x: "0.824", y: "0.593", color: "yellow", note: "Fluffy microphone"}];
+				var circle_notes = [	{x: "0.5", y:"0.6", radius:"0.05", color:"yellow", note:"AFL Grand Final Trophy"}, 
+								{x: "0.3", y:"0.35", radius:"0.025", color: "red", note: '\
+								<center><b>Brisbane Lions Flag</b><br/>\
+								<img src="http://www.lions.com.au/static-resources/themes/brisbane/images/logo-brisbane.png"/></center>\
+								<a href="http://www.lions.com.au/" target="blank">The Brisbane Lions</a> \
+								is an <a href="http://en.wikipedia.org/wiki/Australian_rules_football" target="blank">Australian rules football club.</a>'
+								},
+								{x: "0.82", y: "0.63", radius:"0.015", color: "white", note: "Fluffy microphone"}];
+				$(window).load(function() {
+
+					var $img = $("#image").imgNotes();
+					$img.imgNotes("import", default_notes);
+					
+					$("#print").on("click", function() {
+						$(".viewport").printThis({importStyle: true});
+					});
+
+					default_onAdd = $img.imgNotes("option", "onAdd");
+					default_onUpdateMarker = $img.imgNotes("option", "onUpdateMarker");
+					default_onUpdate = $img.imgNotes("option", "onUpdate");
+					colored_onAdd = function(note) {
+						this.options.vAll = "bottom";
+						this.options.hAll = "middle";
+						var elem = $(document.createElement('div')).addClass("pin").append($('<p class="pin-text">'+(this.notes.length+1)+'</p>')).prepend($('<img>',{src: 'lib/images/box_pin.svg#'+note.color}).addClass("pin")).attr("title","");
+						$(elem).tooltip({
+							content: function() {
+								return $(elem).data("note").note;
+							},
+							hide: {delay:1000}
+						});
+						return elem;
+					};
+					circle_onAdd = function(note) {
+						this.options.vAll = "middle";
+						this.options.hAll = "middle";
+						var color = note.color,
+							hsz = Math.round(note.radius * this.img.naturalWidth),
+							size = hsz+"px";
+							
+						var elem = $(document.createElement('div')).css({
+												"border-style": "solid",
+												"border-color": color,
+												height: size,
+												width: size,
+												"border-radius": size
+						});
+						$(elem).tooltip({
+							content: function() {
+								return $(elem).data("note").note;
+							},
+							hide: {delay:1000}
+						}).attr("title","");
+						return elem;
+					};
+					circle_onUpdateMarker = function(elem) {
+						var $elem = $(elem),
+							note = $elem.data("note"),
+							pos = this.imgToView( note.x, note.y),
+							zoom = this.options.zoom;
+						if (pos) {
+							$elem.css({
+								left: (pos.x - $elem.data("xOffset")),
+								top: (pos.y - $elem.data("yOffset")),
+								position: "absolute",
+								transform: "scale(" + zoom + "," + zoom + ")"
+							});
+						}
+					};
+					lines_onUpdate = function() {
+						var self = this;
+					// Delete the lines
+						$('.mkr_line').remove();
+					// Draw the lines
+						var isFirst = true,
+							lastPos;
+						$.each(this.notes, function() {
+							var note = $(this).data("note")
+							var pos = self.imgToView(note.x, note.y);
+							if (isFirst === false) {
+								var elem = createLine(lastPos.x, lastPos.y, pos.x, pos.y, {stroke: "3", color:"red"});
+								elem.addClass('mkr_line');
+								$(self.view).append(elem);
+							}
+							lastPos = pos;
+							isFirst = false;
+						});
+					// Show the markers	
+						$.each(this.notes, function() {
+							self.options.onUpdateMarker.call(self, this);
+						});
+					};
+					tooltip_onAdd = function(note) {
+						this.options.vAll = "bottom";
+						this.options.hAll = "middle";
+						var elem = $(document.createElement('div')).addClass("tooltip").wrapInner('<span class="tooltiptext"></span>');
+						$(elem).find("span").html(note.note);
+						return elem;
+					};
+					
+					$("[name='example']").on("change", function(e) {
+						$img.imgNotes("clear");
+						$('.mkr_line').remove();
+						switch ($( e.target ).val()) {
+							case "colored":
+								$img.imgNotes("option", "onAdd", colored_onAdd);
+								$img.imgNotes("option", "onUpdateMarker", default_onUpdateMarker);
+								$img.imgNotes("option", "onUpdate", default_onUpdate);
+								$img.imgNotes("import", color_notes);
+								break;
+							case "circle":
+								$img.imgNotes("option", "onAdd", circle_onAdd);
+								$img.imgNotes("option", "onUpdateMarker", circle_onUpdateMarker);
+								$img.imgNotes("option", "onUpdate", default_onUpdate);
+								$img.imgNotes("import", circle_notes);
+								break;
+							case "lines":
+								$img.imgNotes("option", "onAdd", default_onAdd);
+								$img.imgNotes("option", "onUpdateMarker", default_onUpdateMarker);
+								$img.imgNotes("option", "onUpdate", lines_onUpdate);
+								$img.imgNotes("import", default_notes);
+								break;
+							case "tooltip":
+								$img.imgNotes("option", "onAdd", tooltip_onAdd);
+								$img.imgNotes("option", "onUpdateMarker", default_onUpdateMarker);
+								$img.imgNotes("option", "onUpdate", default_onUpdate);
+								$img.imgNotes("import", default_notes);
+								break;
+							default:
+								$img.imgNotes("option", "onAdd", default_onAdd);
+								$img.imgNotes("option", "onUpdateMarker", default_onUpdateMarker);
+								$img.imgNotes("option", "onUpdate", default_onUpdate);
+								$img.imgNotes("import", default_notes);
+								break;
+						};
+					});
+				});
+			})(jQuery);
+		</script>
+	</body>
+</html>
