@@ -28,7 +28,7 @@
 			<tr>
 			<td style="padding: 10px">
 				<div align="center">
-					<button id="toggleEdit">Edit</button> <button id="export">Export</button> <button id="clear">Clear</button>
+					<button id="toggleEdit">Edit</button> <button id="export">Export</button> <button id="clear">Clear</button> <button id="toggleZoom">Zoom On</button>	<button id="toggleDrag">Drag On</button>
 				</div>
 			</td>
 			</tr>
@@ -127,6 +127,41 @@
 					$clear.on("click", function() {
 						$img.imgNotes('clear');
 					});
+					
+					var $toggleZ = $("#toggleZoom");
+					if ($img.imgNotes("option","zoomable"))
+						$toggleZ.text("Zoom Off");
+					else
+						$toggleZ.text("Zoom On");
+		
+					$toggleZ.on("click", function() {
+						var $this = $(this);
+						if ($this.text()=="Zoom On") {
+							$this.text("Zoom Off");
+							$img.imgNotes("option","zoomable", true);
+						} else {
+							$this.text("Zoom On");
+							$img.imgNotes("option","zoomable", false);
+						}
+					});
+
+					var $toggleD = $("#toggleDrag");
+					if ($img.imgNotes("option","dragable"))
+						$toggleD.text("Drag Off");
+					else
+						$toggleD.text("Drag On");
+		
+					$toggleD.on("click", function() {
+						var $this = $(this);
+						if ($this.text()=="Drag On") {
+							$this.text("Drag Off");
+							$img.imgNotes("option","dragable", true);
+						} else {
+							$this.text("Drag On");
+							$img.imgNotes("option","dragable", false);
+						}	
+					});
+
 				});
 		})(jQuery);
 		</script>
