@@ -1,4 +1,6 @@
 node_modules/ 
 .directory
 .jshintrc
+test.html
+
 
