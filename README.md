@@ -16,19 +16,12 @@ If you don't find this plugin has what you need check out my [imgViewer2](https:
 
 ## Documentation
 1.  [Using the plugin](plugindocs/usage.md)
-2.  [Plugin options](plugindocs/options.md)
-3.  [Plugin methods](plugindocs/methods.md)
+2.  [Plugin options](plugindocs/options.adoc)
+3.  [Plugin methods](plugindocs/methods.adoc)
 4.  [Extending the plugin](plugindocs/extending.md)
 5.  [Release History](releases.md)
 
 ## License
 
-This plugin is provided under the [MIT License](http://opensource.org/licenses/MIT). 
+This plugin is provided under the [MIT License](http://opensource.org/licenses/MIT).
 Copyright (c) 2017 Wayne Mogg.
-
-
-
-
-
-
-
