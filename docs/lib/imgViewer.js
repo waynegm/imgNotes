@@ -111,7 +111,7 @@ var waitForFinalEvent = (function () {
 					};
 					self.update();
 			}).each(function() {
-				if (this.complete) { $(this).load(); }
+				if (this.complete) { $(this).trigger("load"); }
 			});
 /*
  *			Render loop code during dragging and scaling using requestAnimationFrame

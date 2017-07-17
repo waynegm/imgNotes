@@ -1,0 +1,15 @@
+= Extending
+
+The imgNotes widget is built using the https://learn.jquery.com/jquery-ui/widget-factory/[jQuery UI Widget Factory].
+Extending the functionality of the widget is a relatively simple process as described in
+https://learn.jquery.com/jquery-ui/widget-factory/extending-widgets/[Extending Widgets with the Widget Factory]. It
+is itself just an extension of my https://github.com/waynegm/imgViewer[imgViewer] widget.
+
+As an example
+[source, javascript]
+----
+$.widget("wgm.imgExtension", $.wgm.imgNotes, {
+	options: {
+	}
+});
+----

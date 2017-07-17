@@ -1,6 +1,6 @@
 {
   "name": "imgnotes",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "extension of imgviewer plugin that adds notes and markers to an image tha can be zoomed and panned",
   "keywords": ["jquery-plugin", "ecosystem:jquery", "image", "notes", "annotation"],
   "repository": {"type": "git", "url": "https://github.com/waynegm/imgNotes.git"},

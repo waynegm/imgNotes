@@ -1,4 +1,6 @@
 # Release History
+## 1.0.1
+- update imgViewer plugin to 1.0.1
 ## 1.0.0
 - Restructure repository layout
 - Change build system from grunt to vanilla npm
