@@ -1,12 +1,9 @@
 = Plugin Options
 :toc:
-:toc-placement: preamble
+:toc-placement!:
 
-The options unique to this plugin are listed below. Because this plugin is an extension
-of the https://github.com/waynegm/imgViewer[imgViewer] it also has all of the
-https://github.com/waynegm/imgViewer/plugindocs/options.md[imgViewer options] as well.
+*Using Plugin Options*
 
-== Using Plugin Options
 The widget options can be set at the time of creation:
 
 [source, javascript]
@@ -27,15 +24,20 @@ The current value of an option can be retrieved by:
  $img.imgNotes("option", "zoomMax");
 ----
 
-== Options
-=== canEdit
+The options unique to this plugin are listed below. Because this plugin is an extension
+of the https://github.com/waynegm/imgViewer[imgViewer] it also has all of the
+https://github.com/waynegm/imgViewer/plugindocs/options.md[imgViewer options] as well.
+
+toc::[]
+
+== canEdit
   * Controls if notes can be added or edited
   * Default: false
   * Example - to put the widget into edit mode:
 
  $("#image1").imgNotes("option", "canEdit", true);
 
-=== vAll
+== vAll
   * Controls the vertical positioning of the marker relative to the marker location. The change only affects markers subsequently inserted
   * Valid Values: top, middle or bottom
   * Default: middle
@@ -46,7 +48,7 @@ The current value of an option can be retrieved by:
  $("#image1").imgNotes("option", "vAll", "bottom");
 ----
 
-=== hAll
+== hAll
   * Controls the horizontal positioning of the marker relative to the marker location. The change only affects markers subsequently inserted
   * Valid Values: left, middle or right
   * Default: middle
@@ -57,7 +59,7 @@ The current value of an option can be retrieved by:
 $("#image1").imgNotes("option", "hAll", "left");
 ----
 
-=== onAdd
+== onAdd
   * Callback triggered when a marker/note is added to the widget to allow developers to define their own markers. This will happen when notes are imported using the "import" method and when the user clicks on the widget in edit mode. Within the callback `this` refers to the imgNotes widget.
   * Default: Inserts a numbered inverted black teardrop image aligned to point at the insertion point
   * Callback Arguments:
@@ -76,7 +78,7 @@ $("#image1").imgNotes("option", "onAdd", function(note) {
 });
 ----
 
-=== onEdit
+== onEdit
   * Callback triggered by a mouseclick on the image, to insert a new marker/note, or on an exisitng marker to edit the note when the widget is in edit mode (canEdit: true). Within the callback `this` refers to the imgNotes widget.
   * Default: is do nothing
   * Callback Arguments:
@@ -122,7 +124,7 @@ var $img = $("#image").imgNotes({
 });
 ----
 
-=== onShow
+== onShow
   * Callback triggered by a mouseclick on an existing marker when the widget is in view mode (canEdit: false). Within the callback `this` refers to the imgNotes widget.
   * Default: is do nothing.
   * Callback Arguments:
@@ -166,7 +168,7 @@ var $img = $("#image").imgNotes({
 });
 ----
 
-=== onUpdateMarker
+== onUpdateMarker
    * Callback triggered when a marker is redrawn. Within the callback "this" refers to the imgNotes widget.
    * Default: Display the marker at its original size on the image positioned according to the vAll and hAll alignment options
    * Callback Arguments:
@@ -191,7 +193,7 @@ $("#image").imgNotes({
 });
 ----
 
-=== onUpdate
+== onUpdate
    * Callback triggered when the entire view needs to be repainted. Within the callback "this" refers to the imgNotes widget. The onUpdateMarker callback should be called on each note element as part of this is reimplemented.
    * Default: Call the onUpdateMarker callback for each note element
    * Callback arguments: none

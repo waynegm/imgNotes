@@ -1,11 +1,12 @@
 = Plugin Methods
 :toc:
-:toc-placement: preamble
+:toc-placement!:
 
 The methods unique to this plugin are listed below. Because this plugin is an extension of
 the https://github.com/waynegm/imgViewer[imgViewer] it also has all of the
 https://github.com/waynegm/imgViewer/plugindocs/methods.md[imgViewer methods] as well.
 
+toc::[]
 == addNote
   * Add a note to the image.
 	* Triggers the "onAdd" callback to insert the markup for the marker
@@ -20,7 +21,6 @@ https://github.com/waynegm/imgViewer/plugindocs/methods.md[imgViewer methods] as
 ----
 elem = $("#image1").imgNotes("addNote",{x: 0.4, y: 0.3, note: "Note <b>Text</b>"});
 ----
-
 == count
   * Get the number of notes in the widget
   * Arguments: none
